@@ -42,7 +42,7 @@ const App = () => {
     // <LoginPage />
     // <HomePage />
     // <MyWrapper />
-    <ThemeProvider theme={theme}>
+    // <ThemeProvider theme={theme}>
       <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -53,7 +53,7 @@ const App = () => {
             <Route path="*" element={<ErrorPage />} />
           </Routes>
       </Router>
-    </ThemeProvider>
+    // </ThemeProvider>
   );
 }
 
