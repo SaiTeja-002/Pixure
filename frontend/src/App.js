@@ -10,6 +10,7 @@ import ProfilePage from './pages/ProfilePage';
 import UpdateProfilePage from './pages/UpdateProfilePage';
 import AddPost from './pages/AddPostPage';
 import StaggeredLayout from './pages/StaggeredLayout';
+import DragDropFiles from './pages/DragDropFiles';
 
 const App = () => {
 
@@ -42,10 +43,11 @@ const App = () => {
     // <LoginPage />
     // <HomePage />
     // <MyWrapper />
-    <ThemeProvider theme={theme}>
+    // <ThemeProvider theme={theme}>
       <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/drag" element={<DragDropFiles />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/addpost" element={<AddPost />} />
             <Route path="/profile" element={<ProfilePage />} />
@@ -53,7 +55,7 @@ const App = () => {
             <Route path="*" element={<ErrorPage />} />
           </Routes>
       </Router>
-    </ThemeProvider>
+    // </ThemeProvider>
   );
 }
 
