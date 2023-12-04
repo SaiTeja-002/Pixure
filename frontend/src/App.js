@@ -10,6 +10,7 @@ import ProfilePage from './pages/ProfilePage';
 import UpdateProfilePage from './pages/UpdateProfilePage';
 import AddPost from './pages/AddPostPage';
 import StaggeredLayout from './pages/StaggeredLayout';
+import Header from './components/Header';
 
 const App = () => {
 
@@ -44,6 +45,7 @@ const App = () => {
     // <MyWrapper />
     // <ThemeProvider theme={theme}>
       <Router>
+        <Header />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
