@@ -1,0 +1,24 @@
+.header-style {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding: 10px;
+    height: 75px;
+}
+
+.profile-icon {
+    margin-left: auto; /* Pushes the profile icon to the right edge */
+    margin-right: 30px; /* Add some spacing to the right of the profile icon */
+    color: black; /* Set the color for the profile icon */
+}
+
+.logo {
+    color: black;
+}
+
+.search-bar {
+    flex: 1; /* Take up remaining space between logo and profile icon */
+    margin: -100px 100px;
+    padding: 0 0px; /* Adjust padding as needed for the search bar */
+}

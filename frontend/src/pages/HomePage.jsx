@@ -9,26 +9,26 @@ import SearchIcon from '@mui/icons-material/Search';
 
 const HomePage = () => {
     const hashtags = [
-        'travel',
-        'food',
-        'nature',
-        'photography',
-        'fitness',
-        'art',
-        'fashion',
-        'technology',
-        'music',
-        'sports',
-        'travel',
-        'food',
-        'nature',
-        'photography',
-        'fitness',
-        'art',
-        'fashion',
-        'technology',
-        'music',
-        'sports',
+        'Travel',
+        'Food',
+        'Nature',
+        'Photography',
+        'Fitness',
+        'Art',
+        'Fashion',
+        'Technology',
+        'Music',
+        'Sports',
+        'Travel',
+        'Food',
+        'Nature',
+        'Photography',
+        'Fitness',
+        'Art',
+        'Fashion',
+        'Technology',
+        'Music',
+        'Sports',
     ];
 
     const styles = `
@@ -69,14 +69,10 @@ const HomePage = () => {
         <div>
             <style>{styles}</style>
 
-            <div className="search-bar">
-                {/* <input type="text" placeholder="Search..." /> */}
+            {/* <div className="search-bar">
                 <TextField
-                    // sx={{ border: 'none', "& fieldset": { border: 'none' }, }}
-                    // sx={{ border: 0 }}
                     fullWidth
                     label='Search'
-                    // type='search'
                     variant='filled'
 
                     InputProps={{
@@ -85,7 +81,7 @@ const HomePage = () => {
                         }
                     }}
                 />
-            </div>
+            </div> */}
 
 
             <div className="hashtags">
