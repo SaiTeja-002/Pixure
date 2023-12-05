@@ -114,6 +114,38 @@
     padding: 15px;
 }
 
+.profile-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.profile-text {
+    margin-top: 10px;
+    text-align: center;
+    /* Add space between profile photo and text */
+}
+
+.text-with-icon {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    /* Add space between username and bio */
+}
+
+.edit-icon {
+    margin-left: 5px;
+}
+
+/* .profile-text {
+    flex-grow: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+} */
+
 .profile-details {
     display: flex;
     justify-content: space-between;

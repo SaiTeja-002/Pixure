@@ -89,8 +89,9 @@
 import React, { useState } from 'react';
 import images from '../data/ImageData';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, IconButton, Tooltip } from '@mui/material';
 import { Edit as EditIcon } from '@mui/icons-material';
+import DoneIcon from '@mui/icons-material/Done';
 import '../styles/ProfilePage.css';
 
 import Box from '@mui/material/Box';
@@ -132,14 +133,65 @@ const ProfilePage = () => {
     <div className="profile-page-container">
       <div className="profile-details">
         <div className="profile-info">
+
           <div className="profile-image-container">
             <img src={profileImageUrl} alt="Profile Picture" className="profile-image" />
           </div>
+
           <div className="profile-text">
-            <h2>Levi Chan</h2>
-            <h3>We can't always carry our fallen comrades home, but we carry their memory.</h3>
+            <div className="text-with-icon">
+              {editUsername ? (
+                <>
+                  <TextField
+                    value={username}
+                    onChange={handleUsernameChange}
+                    fullWidth
+                    variant="outlined"
+                    autoFocus
+                  />
+                  <IconButton onClick={handleUsernameEdit}>
+                    <DoneIcon />
+                  </IconButton>
+                </>
+              ) : (
+                <>
+                  {username}
+                  <IconButton onClick={handleUsernameEdit} className="edit-icon">
+                    <EditIcon />
+                  </IconButton>
+                </>
+              )}
+            </div>
+            <div className="text-with-icon">
+              {editBio ? (
+                <>
+                  <TextField
+                    value={bio}
+                    onChange={handleBioChange}
+                    fullWidth
+                    multiline
+                    rows={4}
+                    variant="outlined"
+                  />
+                  <IconButton onClick={handleBioEdit}>
+                    <DoneIcon />
+                  </IconButton>
+                </>
+              ) : (
+                <>
+                  {bio}
+                  <IconButton onClick={handleBioEdit} className="edit-icon">
+                    <EditIcon />
+                  </IconButton>
+                </>
+              )}
+            </div>
           </div>
         </div>
+
+
+
+
 
         <div className="additional-content">
           <div className="upload-image">
