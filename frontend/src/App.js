@@ -13,6 +13,7 @@ import StaggeredLayout from './pages/StaggeredLayout';
 import Header from './components/Header';
 import AddNewGig from './pages/AddNewGig';
 import SignupPage from './pages/SignupPage';
+import ProfilePage2 from './pages/ProfilePage2';
 
 const App = () => {
 
@@ -60,6 +61,7 @@ const App = () => {
             <Route path="/addpost" element={<AddPost />} />
             <Route path="/gig" element={<AddNewGig />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile2" element={<ProfilePage2 />} />
             <Route path="/updateprofile" element={<UpdateProfilePage />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>

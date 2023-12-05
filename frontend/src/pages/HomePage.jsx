@@ -94,7 +94,7 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <div style={{ height: "85vh", overflowY: "scroll", padding: "20px" }}>
+            <div style={{ height: "85vh", padding: "20px" }}>
                 <ResponsiveMasonry
                     columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
                 // gutter="20px"
