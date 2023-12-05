@@ -26,10 +26,10 @@ const Header = () => {
                 <TextField
                     fullWidth
                     label='Search'
-                    variant='filled'
+                    // variant='filled'
                     InputProps={{
                         style: {
-                            borderRadius: "50px"
+                            borderRadius: "10px"
                         }
                     }}
                 />
