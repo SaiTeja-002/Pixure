@@ -11,6 +11,7 @@ import UpdateProfilePage from './pages/UpdateProfilePage';
 import AddPost from './pages/AddPostPage';
 import StaggeredLayout from './pages/StaggeredLayout';
 import Header from './components/Header';
+import AddNewGig from './pages/AddNewGig';
 
 const App = () => {
 
@@ -50,6 +51,7 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/addpost" element={<AddPost />} />
+            <Route path="/gig" element={<AddNewGig />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/updateprofile" element={<UpdateProfilePage />} />
             <Route path="*" element={<ErrorPage />} />
