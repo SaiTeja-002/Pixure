@@ -1,9 +1,7 @@
 import User from '../models/users.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import dotenv from "dotenv";
-
-dotenv.config();
+import { extractPostsFromList } from './postcontroller.js';
 
 //User signUp Function: Returns Cookie
 export const signUp = async (req, res) => {
@@ -157,7 +155,7 @@ export const updateInfo = async (req, res) => {
             if ((field == "name" && await isUsernameAvailable(values[index]))) {
                 validFieldsToUpdate[field] = values[index];
             }
-            else if (otherFields.includes(field)){
+            else if (otherFields.includes(field)) {
                 validFieldsToUpdate[field] = values[index];
             }
         }
@@ -179,63 +177,124 @@ export const updateInfo = async (req, res) => {
 //Follows The Specified User
 export const followUser = async (req, res) => {
     try {
-      const currentUser = await User.findById(req.body.userId);
-      const otherUserName = req.body.account;
-  
-      const otherUser = await User.findOne({ name: otherUserName });
-      if (!otherUser) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-    
-      //Validity of the operation
-      if (currentUser.following.includes(otherUser._id)) {
-        return res.status(400).json({ message: 'You are already following this user' });
-      }
-  
-      // Updating the respective lists
-      currentUser.following.push(otherUser._id);
-      otherUser.followers.push(currentUser._id);
-  
-      // Saving the changes to the database
-      await Promise.all([currentUser.save(), otherUser.save()]);
-  
-      res.status(200).json({ message: `You are now following ${otherUserName}` });
+        const currentUser = await User.findById(req.body.userId);
+        const otherUserName = req.body.account;
+
+        const otherUser = await User.findOne({ name: otherUserName });
+        if (!otherUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        //Validity of the operation
+        if (currentUser.following.includes(otherUser._id)) {
+            return res.status(400).json({ message: 'You are already following this user' });
+        }
+
+        // Updating the respective lists
+        currentUser.following.push(otherUser._id);
+        otherUser.followers.push(currentUser._id);
+
+        // Saving the changes to the database
+        await Promise.all([currentUser.save(), otherUser.save()]);
+
+        res.status(200).json({ message: `You are now following ${otherUserName}` });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Something went wrong' });
+        console.error(error);
+        res.status(500).json({ message: 'Something went wrong' });
     }
 };
 
 //UnFollows The Specified User
 export const unfollowUser = async (req, res) => {
     try {
-      const currentUser = await User.findById(req.body.userId); 
-      const otherUserName = req.body.account;
+        const currentUser = await User.findById(req.body.userId);
+        const otherUserName = req.body.account;
 
-      const otherUser = await User.findOne({ name: otherUserName });
-      if (!otherUser) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      // Validity of the operation
-      if (!currentUser.following.includes(otherUser._id)) {
-        return res.status(400).json({ message: 'You are not following this user' });
-      }
-  
-      //Updating the respective lists
-      currentUser.following = currentUser.following.filter(userId => userId.toString() !== otherUser._id.toString());
-      otherUser.followers = otherUser.followers.filter(userId => userId.toString() !== currentUser._id.toString());
-  
-      // Saving the changes to the database
-      await Promise.all([currentUser.save(), otherUser.save()]);
-  
-      res.status(200).json({ message: `You have unfollowed ${otherUserName}` });
+        const otherUser = await User.findOne({ name: otherUserName });
+        if (!otherUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Validity of the operation
+        if (!currentUser.following.includes(otherUser._id)) {
+            return res.status(400).json({ message: 'You are not following this user' });
+        }
+
+        //Updating the respective lists
+        currentUser.following = currentUser.following.filter(userId => userId.toString() !== otherUser._id.toString());
+        otherUser.followers = otherUser.followers.filter(userId => userId.toString() !== currentUser._id.toString());
+
+        // Saving the changes to the database
+        await Promise.all([currentUser.save(), otherUser.save()]);
+
+        res.status(200).json({ message: `You have unfollowed ${otherUserName}` });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Something went wrong' });
+        console.error(error);
+        res.status(500).json({ message: 'Something went wrong' });
     }
-  };
-  
+};
+
+//Adds Post to User's List
+export const addPost = async (req, res, next) => {
+    try {
+        const postId = req.body.postId; 
+        const userId = req.body.userId; 
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        //Adding the Post & Saving To DB
+        user.posts.push(postId);
+        await user.save();
+
+        next();
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+//Extracts info of Posts Owner
+export const extractOwnerInfo = async(posts) =>{
+    let newPosts = posts;
+    for(let i=0;i<posts.length;i++){
+        let post = newPosts[i];
+        let owner = await User.findById(post.owner)
+        newPosts[i].owner = owner.name;
+        newPosts[i].photo = owner.photo;
+    }
+    return newPosts;
+}
 
 
+//Profile Info Of Queried User
+export const profileInfo = async (req, res) => {
+    try {
+        let userName = req.params.name;
 
+        let user = await User.findOne({ name: userName });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Extract Profile Info
+        let profileInfo = {
+            name: user.name,
+            bio: user.bio,
+            followersCount: user.followers.length,
+            followingCount: user.following.length,
+        };
+
+        //Owner Field Id -> To Owner Name
+        let posts =  await extractPostsFromList(user.posts);
+        let modifiedPosts = await extractOwnerInfo(posts);
+        profileInfo.posts = modifiedPosts;
+
+        res.status(200).json(profileInfo);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};
