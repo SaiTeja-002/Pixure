@@ -21,7 +21,7 @@ export const signUp = async (req, res) => {
             photo: "",
             bio: "",
             password: hashedPassword,
-            email: email,
+            mail: email,
             followers: [],
             following: [],
             posts: [],
