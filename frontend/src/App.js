@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Link, useLocation } from "react-router-dom";
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import './App.css';
@@ -12,6 +12,7 @@ import AddPost from './pages/AddPostPage';
 import StaggeredLayout from './pages/StaggeredLayout';
 import Header from './components/Header';
 import AddNewGig from './pages/AddNewGig';
+import SignupPage from './pages/SignupPage';
 
 const App = () => {
 
@@ -40,15 +41,21 @@ const App = () => {
     },
   };
 
+  // const location = useLocation();
+  // const hidePages = ['/login', '/signup'];
+  // const hide = hidePages.includes(location.pathname);
+
   return (
     // <LoginPage />
     // <HomePage />
     // <MyWrapper />
     // <ThemeProvider theme={theme}>
       <Router>
+        {/* {!hide && <Header />} */}
         <Header />
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/signup" element={<SignupPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/addpost" element={<AddPost />} />
             <Route path="/gig" element={<AddNewGig />} />
