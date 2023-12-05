@@ -78,7 +78,7 @@ export const searchByTitle = async (req, res, next) => {
 export const randomPosts = async (req, res) => {
     try {
         let randomPosts = await Post.aggregate([
-            { $sample: { size: 10 } }
+            { $sample: { size: 20 } }
         ]);
 
         let postIds = randomPosts.map(post => post._id);

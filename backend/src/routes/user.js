@@ -1,11 +1,12 @@
 import express from 'express';
 import { validCookie } from '../middlewear/cookie.js';
-import { followUser, getInfo, getSocialList, profileInfo, unfollowUser, updateInfo } from '../controllers/usercontroller.js';
+import { followUser, getInfo, getPosts, getSocialList, profileInfo, unfollowUser, updateInfo } from '../controllers/usercontroller.js';
 
 const router = express.Router();
 
 router.get('/profile', validCookie, getInfo); // Get Name, Bio & Profile
 router.get('/social', validCookie, getSocialList); //Get their followers and following list
+router.get('/posts', validCookie, getPosts); //Get their Posts
 router.patch('/update', validCookie, updateInfo); //Update name,bio & Profile
 router.patch('/follow', validCookie, followUser); // follow a specific user
 router.patch('/unfollow', validCookie, unfollowUser); // unfollow a user

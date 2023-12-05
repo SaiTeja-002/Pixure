@@ -134,6 +134,29 @@ export const getSocialList = async (req, res) => {
     }
 };
 
+//Returners Posts
+export const getPosts = async (req,res) => {
+    try{
+        let userId = req.body.userId;
+        let user = await User.findById(userId);
+
+        if(!user){
+            return res.status(404).json({message : 'User not found'});
+        }
+
+        let posts = await extractPostsFromList(user.posts);
+        
+        //Removing Owner field - Already Known
+        posts = posts.map(post => ({ title: post.title, image: post.image }));
+
+        res.status(200).json({posts : posts});
+
+    }catch(error){
+        console.error(error);
+        res.status(500).json({message : "Something went wrong"});
+    }
+}
+
 //Returns True if Username is Available
 const isUsernameAvailable = async (username) => {
     const existingUser = await User.findOne({ name: username });
@@ -267,7 +290,6 @@ export const extractOwnerInfo = async(posts) =>{
     }
     return newPosts;
 }
-
 
 //Profile Info Of Queried User
 export const profileInfo = async (req, res) => {
