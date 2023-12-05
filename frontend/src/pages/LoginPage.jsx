@@ -156,14 +156,23 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { TextField } from '@mui/material'
 import '../styles/Login.css'
+import * as authActions from '../actions/authAction.js';
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         console.log('Username:', username);
         console.log('Password:', password);
+        let response = await authActions.login(username,password);
+
+        if(response == "Success"){
+            window.location.href = "/";
+        }
+        else{
+            //response contains error message
+        }
     };
 
     return (
@@ -219,7 +228,7 @@ const LoginPage = () => {
                         /> */}
                     </div>
 
-                    <button className="button" onClick={handleLogin}>
+                    <button className="button" onClick={async () => {await handleLogin();}}>
                         Login
                     </button>
 

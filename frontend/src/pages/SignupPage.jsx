@@ -2,16 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { TextField } from '@mui/material'
 import '../styles/Login.css'
+import * as authActions from '../actions/authAction.js';
 
 const SignupPage = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSignup = () => {
+    const handleSignup = async () => {
         console.log('Email:', email);
         console.log('Username:', username);
         console.log('Password:', password);
+
+        let response = await authActions.signup(email, username, password);
+        if (response == "Success") {
+            window.location.href = "/";
+        }
+        else {
+            //response contains error message
+        }
     };
 
     return (
@@ -83,7 +92,7 @@ const SignupPage = () => {
                         /> */}
                     </div>
 
-                    <button className="button" onClick={handleSignup}>
+                    <button className="button" onClick={async () => { await handleSignup() }}>
                         Signup
                     </button>
 
