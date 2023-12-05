@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const hastagSchema = mongoose.Schema({
-    name : [],
+    name : String,
     images : [String]
 })
 
