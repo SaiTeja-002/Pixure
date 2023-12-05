@@ -4,7 +4,7 @@ import { followUser, getInfo, getPosts, getSocialList, profileInfo, unfollowUser
 
 const router = express.Router();
 
-router.get('/profile', validCookie, getInfo); // Get Name, Bio & Profile
+router.get('/info', validCookie, getInfo); // Get Name, Bio & Profile
 router.get('/social', validCookie, getSocialList); //Get their followers and following list
 router.get('/posts', validCookie, getPosts); //Get their Posts
 router.patch('/update', validCookie, updateInfo); //Update name,bio & Profile
