@@ -85,7 +85,7 @@ export const randomPosts = async (req, res) => {
         let posts = await extractPostsFromList(postIds);
         let modifiedPosts = await extractOwnerInfo(posts);
 
-        res.status(200).json({ randomPosts: modifiedPosts});
+        res.status(200).json({ posts: modifiedPosts});
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
