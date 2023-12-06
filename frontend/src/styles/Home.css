@@ -1,0 +1,31 @@
+.search-bar {
+    padding: 20px;
+    text-align: center;
+}
+
+.hashtags {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px;
+}
+
+.hashtag {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 0px;
+    font-size: 14px;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    padding: 20px;
+}
+
+.grid-item {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    border-radius: 8px;
+}

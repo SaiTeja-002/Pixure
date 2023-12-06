@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import * as postActions from '../actions/postAction.js';
-import { TextField } from '@mui/material'
+import { TextField, Chip } from '@mui/material'
 import { LOGINHREF } from '../constants.js';
 
 import images from '../data/ImageData'
+import '../styles/Home.css'
 
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
@@ -33,40 +34,6 @@ const HomePage = () => {
         'Sports',
     ];
 
-    const styles = `
-    .search-bar {
-      padding: 20px;
-      text-align: center;
-    }
-
-    .hashtags {
-      overflow-x: auto;
-      white-space: nowrap;
-      padding: 10px;
-    }
-
-    .hashtag {
-      display: inline-block;
-      padding: 5px 10px;
-      margin: 0 5px;
-      font-size: 14px;
-    }
-
-    .image-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 10px;
-      padding: 20px;
-    }
-
-    .grid-item {
-      width: 100%;
-      height: auto;
-      max-width: 100%;
-      border-radius: 8px;
-    }
-  `;
-
     useEffect(() => {
         async function updateFeed() {
             await postActions.getFeed();
@@ -77,28 +44,12 @@ const HomePage = () => {
 
     return (
         <div>
-            <style>{styles}</style>
-
-            {/* <div className="search-bar">
-                <TextField
-                    fullWidth
-                    label='Search'
-                    variant='filled'
-
-                    InputProps={{
-                        style: {
-                            borderRadius: "50px"
-                        }
-                    }}
-                />
-            </div> */}
-
-
             <div className="hashtags">
                 <div className="hashtag-scroll">
                     {hashtags.map((tag, index) => (
                         <span key={index} className="hashtag">
-                            #{tag}
+                            {/* #{tag} */}
+                            <Chip label={tag} />
                         </span>
                     ))}
                 </div>
