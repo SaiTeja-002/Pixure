@@ -1,8 +1,6 @@
 import axios from 'axios';
-
-//Base URL for Auth Related API Calls
-const baseURL = "http://localhost:5000";
+import { BASEURL } from '../constants';
 
 //Auth Functions
-export const signup = (body) => axios.post(`${baseURL}/auth/signup`, body);
-export const login = (body) => axios.post(`${baseURL}/auth/login`, body);
+export const signup = (body) => axios.post(`${BASEURL}/auth/signup`, body);
+export const login = (body) => axios.post(`${BASEURL}/auth/login`, body);
