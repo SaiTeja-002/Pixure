@@ -39,9 +39,9 @@ const Header = () => {
             <NavLink to="/profile">
                 <PersonRoundedIcon className='profile-icon' style={{ fontSize: '2rem' }} />
             </NavLink>
-            <NavLink to="/updateprofile">
+            {/* <NavLink to="/updateprofile">
                 <EditIcon className='profile-icon' style={{ fontSize: '2rem' }} />
-            </NavLink>
+            </NavLink> */}
         </header>
     );
 };
