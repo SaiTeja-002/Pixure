@@ -1,14 +1,16 @@
 import * as api from '../api/postAPI.js';
-import { COOKIE, LOGINHREF } from '../constants.js';
+import { COOKIE, LOGINHREF, UPDATE_FEED } from '../constants.js';
 
 //Gets User Feed
-export const getFeed = async () => {
+export const getFeed = () => async (dispatch) => {
     try {
         let cookie = window.sessionStorage.getItem(COOKIE);
-        let { data, status} = await api.getFeed(cookie);
+        let { data, status } = await api.getFeed(cookie);
         console.log(data.posts);
+
+        dispatch({ type: UPDATE_FEED, payload: data.posts });
     } catch (error) {
-        let {data,status} = error.response;
+        let { data, status } = error.response;
         console.log(data.message);
         (status == 401) && (window.location.href = LOGINHREF);
     }
@@ -18,23 +20,23 @@ export const getFeed = async () => {
 export const searchPost = async (title) => {
     try {
         let cookie = window.sessionStorage.getItem(COOKIE);
-        let { data, status} = await api.getPost(cookie,title);
+        let { data, status } = await api.getPost(cookie, title);
         console.log(data.posts);
     } catch (error) {
-        let {data,status} = error.response;
+        let { data, status } = error.response;
         console.log(data.message);
         (status == 401) && (window.location.href = LOGINHREF);
     }
 };
 
 //Adds Post to DB
-export const addPost = async (image,title,tags) => {
+export const addPost = async (image, title, tags) => {
     try {
         let cookie = window.sessionStorage.getItem(COOKIE);
-        let postInfo = {image,title,tags};
-        let {status} = await api.addPost(cookie,postInfo);
+        let postInfo = { image, title, tags };
+        let { status } = await api.addPost(cookie, postInfo);
     } catch (error) {
-        let {data,status} = error.response;
+        let { data, status } = error.response;
         console.log(data.message);
         (status == 401) && (window.location.href = LOGINHREF);
     }

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import * as postActions from '../actions/postAction.js';
-import { TextField, Chip } from '@mui/material'
-import { LOGINHREF } from '../constants.js';
+import { TextField, Chip } from '@mui/material';
+import {useDispatch, useSelector} from 'react-redux';
 
 import images from '../data/ImageData'
 import '../styles/Home.css'
@@ -35,14 +35,14 @@ const HomePage = () => {
     ];
 
     const [selectedTag, setSelectedTag] = React.useState(null);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        async function updateFeed() {
-            await postActions.getFeed();
-        }
-
-        updateFeed()
+        dispatch(postActions.getFeed());
     }, []);
+
+    const feed = useSelector((state) => state.feed);
+    console.log(feed);
 
     return (
         <div>
