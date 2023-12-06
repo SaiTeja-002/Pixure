@@ -89,11 +89,14 @@
 import React, { useState } from 'react';
 import images from '../data/ImageData';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
-import { TextField, Button, IconButton, Tooltip } from '@mui/material';
+import { TextField, Button, IconButton, Tooltip, Chip } from '@mui/material';
 import { Edit as EditIcon } from '@mui/icons-material';
 import DoneIcon from '@mui/icons-material/Done';
 import '../styles/ProfilePage.css';
 
+// import ChipInput from 'mui-chips-input';
+// import ChipInput from 'material-ui-chip-input';
+import { MuiChipsInput } from 'mui-chips-input'
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -101,6 +104,7 @@ import Tab from '@mui/material/Tab';
 const ProfilePage = () => {
   const profileImageUrl = 'https://wallpapercave.com/wp/wp4308980.jpg';
 
+  const [tags, setTags] = useState([]);
   const [tabValue, setTabValue] = useState(0);
   const [selectedImage, setSelectedImage] = useState(null);
   const [editUsername, setEditUsername] = useState(false);
@@ -127,6 +131,10 @@ const ProfilePage = () => {
 
   const handleBioChange = (event) => {
     setBio(event.target.value);
+  };
+
+  const handleAddChip = (tags) => {
+    setTags(tags);
   };
 
   return (
@@ -190,9 +198,7 @@ const ProfilePage = () => {
         </div>
 
 
-
-
-
+        {/* Upload a new image */}
         <div className="additional-content">
           <div className="upload-image">
             <label htmlFor="image-upload" className="image-upload-label">
@@ -209,19 +215,34 @@ const ProfilePage = () => {
             />
             {selectedImage && <p>{selectedImage}</p>}
           </div>
-          <TextField label="Title" variant="outlined" fullWidth />
-          <TextField
+
+          <TextField style={{marginBottom: '3vh'}} label="Title" variant="outlined" fullWidth />
+
+          <MuiChipsInput value={tags} onChange={handleAddChip} />
+
+          {/* <ChipInput
+            name="tags"
+            variant="outlined"
+            label="Tags"
+            fullWidth
+            value={tags}
+            onAdd={(chip) => handleAddChip(chip)}
+            onDelete={(chip) => handleDeleteChip(chip)}
+          /> */}
+          {/* <TextField
             label="Description"
             variant="outlined"
             fullWidth
             multiline
             rows={4}
             style={{ marginTop: '10px' }}
-          />
+          /> */}
         </div>
       </div>
 
+
       <div className="tabs-container">
+        {/* <Chip label="chip" /> */}
         <Tabs
           variant="fullWidth"
           value={tabValue}

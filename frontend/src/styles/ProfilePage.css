@@ -178,6 +178,8 @@
 .additional-content {
     flex-grow: 1;
     /* margin-left: 20px; */
+    /* min-width: 40vw; */
+    max-width: 45vw;
     margin-left: 30vh;
     display: flex;
     flex-direction: column;
