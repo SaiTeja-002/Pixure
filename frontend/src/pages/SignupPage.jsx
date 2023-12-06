@@ -14,13 +14,7 @@ const SignupPage = () => {
         console.log('Username:', username);
         console.log('Password:', password);
 
-        let response = await authActions.signup(email, username, password);
-        if (response == "Success") {
-            window.location.href = "/";
-        }
-        else {
-            //response contains error message
-        }
+        await authActions.signup(email, username, password);
     };
 
     return (

@@ -165,14 +165,7 @@ const LoginPage = () => {
     const handleLogin = async () => {
         console.log('Username:', username);
         console.log('Password:', password);
-        let response = await authActions.login(username,password);
-
-        if(response == "Success"){
-            window.location.href = "/";
-        }
-        else{
-            //response contains error message
-        }
+        await authActions.login(username,password);
     };
 
     return (

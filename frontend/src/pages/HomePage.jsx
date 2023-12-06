@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
+import * as postActions from '../actions/postAction.js';
 import { TextField } from '@mui/material'
+import { LOGINHREF } from '../constants.js';
 
 import images from '../data/ImageData'
 
@@ -64,6 +66,14 @@ const HomePage = () => {
       border-radius: 8px;
     }
   `;
+
+    useEffect(() => {
+        async function updateFeed() {
+            await postActions.getFeed();
+        }
+
+        updateFeed()
+    }, []);
 
     return (
         <div>
