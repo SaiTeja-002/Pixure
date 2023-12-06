@@ -22,17 +22,19 @@ const HomePage = () => {
         'Technology',
         'Music',
         'Sports',
-        'Travel',
-        'Food',
-        'Nature',
+        'Pravel',
+        'Pood',
+        'Pature',
         'Photography',
-        'Fitness',
-        'Art',
-        'Fashion',
-        'Technology',
-        'Music',
-        'Sports',
+        'Pitness',
+        'Prt',
+        'Pashion',
+        'Pechnology',
+        'Pusic',
+        'Pports',
     ];
+
+    const [selectedTag, setSelectedTag] = React.useState(null);
 
     useEffect(() => {
         async function updateFeed() {
@@ -49,7 +51,12 @@ const HomePage = () => {
                     {hashtags.map((tag, index) => (
                         <span key={index} className="hashtag">
                             {/* #{tag} */}
-                            <Chip label={tag} />
+                            <Chip
+                                label={tag}
+                                clickable
+                                color={selectedTag === tag ? 'primary' : 'default'}
+                                onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
+                            />
                         </span>
                     ))}
                 </div>
