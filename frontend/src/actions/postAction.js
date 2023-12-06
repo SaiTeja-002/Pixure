@@ -4,7 +4,7 @@ import { COOKIE, LOGINHREF } from '../constants.js';
 //Gets User Feed
 export const getFeed = async () => {
     try {
-        let cookie = window.localStorage.getItem(COOKIE);
+        let cookie = window.sessionStorage.getItem(COOKIE);
         let { data, status} = await api.getFeed(cookie);
         console.log(data.posts);
     } catch (error) {
@@ -17,7 +17,7 @@ export const getFeed = async () => {
 //Searches Post By title
 export const searchPost = async (title) => {
     try {
-        let cookie = window.localStorage.getItem(COOKIE);
+        let cookie = window.sessionStorage.getItem(COOKIE);
         let { data, status} = await api.getPost(cookie,title);
         console.log(data.posts);
     } catch (error) {
@@ -30,7 +30,7 @@ export const searchPost = async (title) => {
 //Adds Post to DB
 export const addPost = async (image,title,tags) => {
     try {
-        let cookie = window.localStorage.getItem(COOKIE);
+        let cookie = window.sessionStorage.getItem(COOKIE);
         let postInfo = {image,title,tags};
         let {status} = await api.addPost(cookie,postInfo);
     } catch (error) {

@@ -6,7 +6,7 @@ export const login = async (name, password) => {
     try {
         let loginInfo = { name: name, password: password };
         let { data, status } = await api.login(loginInfo);
-        window.localStorage.setItem(COOKIE, data.cookie);
+        window.sessionStorage.setItem(COOKIE, data.cookie);
         (status == 200) && (window.location.href = HOMEHREF);
     } catch (error) {
         let { data, status } = error.response;
@@ -19,7 +19,7 @@ export const signup = async (email, name, password) => {
     try {
         let signupInfo = { email: email, name: name, password: password };
         let { data, status } = await api.signup(signupInfo);
-        window.localStorage.setItem(COOKIE, data.cookie);
+        window.sessionStorage.setItem(COOKIE, data.cookie);
         (status == 201) && (window.location.href = HOMEHREF);
     } catch (error) {
         let { data, status } = error.response;
