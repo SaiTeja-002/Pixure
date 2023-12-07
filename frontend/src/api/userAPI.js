@@ -12,4 +12,4 @@ export const followUser = (cookie, body) => axios.patch(`${BASEURL}/follow/?cook
 export const unfollowUser = (cookie, body) => axios.patch(`${BASEURL}/unfollow/?cookie=${cookie}`, body);
 
 //Profile Query
-export const fetchProfile = (cookie, name) => axios.get(`${BASEURL}/url/profile:${name}/?cookie=${cookie}`);
+export const fetchProfile = (cookie, name) => axios.get(`${BASEURL}/url/profile/${name}/?cookie=${cookie}`);
