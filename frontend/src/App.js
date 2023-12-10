@@ -52,8 +52,6 @@ const App = () => {
     // <MyWrapper />
     // <ThemeProvider theme={theme}>
       <Router>
-        {/* {!hide && <Header />} */}
-        <Header />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/signup" element={<SignupPage />} />

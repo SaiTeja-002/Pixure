@@ -6,8 +6,6 @@ export const getFeed = () => async (dispatch) => {
     try {
         let cookie = window.sessionStorage.getItem(COOKIE);
         let { data, status } = await api.getFeed(cookie);
-        console.log(data.posts);
-
         dispatch({ type: UPDATE_FEED, payload: data.posts });
     } catch (error) {
         let { data, status } = error.response;
@@ -17,11 +15,11 @@ export const getFeed = () => async (dispatch) => {
 };
 
 //Searches Post By title
-export const searchPost = async (title) => {
+export const searchPost = (title) => async (dispatch) => {
     try {
         let cookie = window.sessionStorage.getItem(COOKIE);
         let { data, status } = await api.getPost(cookie, title);
-        console.log(data.posts);
+        dispatch({ type: UPDATE_FEED, payload: data.posts });
     } catch (error) {
         let { data, status } = error.response;
         console.log(data.message);

@@ -1,92 +1,55 @@
-import React, { useEffect } from 'react';
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
+import React, { useEffect,useRef } from 'react';
+import TagBar from '../components/TagBar.jsx';
+import Header from '../components/Header.jsx';
+import '../styles/Home.css';
+
 import * as postActions from '../actions/postAction.js';
-import { TextField, Chip } from '@mui/material';
-import {useDispatch, useSelector} from 'react-redux';
-
-import images from '../data/ImageData'
-import '../styles/Home.css'
-
-import InputAdornment from '@mui/material/InputAdornment';
-import SearchIcon from '@mui/icons-material/Search';
+import * as tagsActions from '../actions/tagsAction.js';
+import { useDispatch, useSelector } from 'react-redux';
+import PostLayout from '../components/PostLayout.jsx';
 
 const HomePage = () => {
-    const hashtags = [
-        'Travel',
-        'Food',
-        'Nature',
-        'Photography',
-        'Fitness',
-        'Art',
-        'Fashion',
-        'Technology',
-        'Music',
-        'Sports',
-        'Pravel',
-        'Pood',
-        'Pature',
-        'Photography',
-        'Pitness',
-        'Prt',
-        'Pashion',
-        'Pechnology',
-        'Pusic',
-        'Pports',
-    ];
+    const searchActive = useRef(false);
 
-    const [selectedTag, setSelectedTag] = React.useState(null);
     const dispatch = useDispatch();
-
     useEffect(() => {
-        dispatch(postActions.getFeed());
-    }, []);
+        dispatch(postActions.getFeed())
+    }, [dispatch]);
 
-    const feed = useSelector((state) => state.feed);
-    console.log(feed);
+    //Handles Feed When A Hastag is Selected
+    const handleTagChange = (selectedTag) => {
+        if (selectedTag != null) {
+            dispatch(tagsActions.searchByTag(selectedTag));
+        }
+        else {
+            dispatch(postActions.getFeed());
+        }
+    };
+
+    //Handles Feed When A Search is Selected
+    const handleSearchChange = (type,data) => {
+        searchActive.current = true;
+        if(type == "person" && data != ""){
+            //Profile Search Left
+            console.log(`person search : ${data}`);
+        }
+        else if (type == "title" && data != ""){
+            dispatch(postActions.searchPost(data));
+        }
+        else if (type == "random"){
+            dispatch(postActions.getFeed());
+            searchActive.current = false;
+        }
+    }
+
+    //Fetch The Updated Feed From The State
+    let feed = useSelector((state) => state.feed);
 
     return (
         <div>
-            <div className="hashtags">
-                <div className="hashtag-scroll">
-                    {hashtags.map((tag, index) => (
-                        <span key={index} className="hashtag">
-                            {/* #{tag} */}
-                            <Chip
-                                label={tag}
-                                clickable
-                                color={selectedTag === tag ? 'primary' : 'default'}
-                                onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
-                            />
-                        </span>
-                    ))}
-                </div>
-            </div>
-
-            <div style={{ height: "85vh", padding: "20px" }}>
-                <ResponsiveMasonry
-                    columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
-                // gutter="20px"
-                >
-                    <Masonry>
-                        {images.map((image, i) => (
-                            <div key={i} style={{ margin: "10px 10px" }}>
-                                <img
-                                    src={image}
-                                    style={{
-                                        width: "100%",
-                                        display: "block",
-                                        // borderRadius: "8px",
-                                        // padding: "10px",
-                                        // margin: "5px 5px 5px 5px",
-                                        // boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                                    }}
-                                    alt="img"
-                                />
-                            </div>
-                        ))}
-                    </Masonry>
-                </ResponsiveMasonry>
-            </div>
+            <Header onSearchSubmit={handleSearchChange}/>
+            <TagBar onTagChange={handleTagChange} searchActive={searchActive.current}/>
+            <PostLayout feed={feed}/>
         </div>
     );
 };

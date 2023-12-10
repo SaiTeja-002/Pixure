@@ -1,17 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/Header.css'
 import { NavLink, useLocation } from 'react-router-dom';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import { TextField } from '@mui/material'
-import EditIcon from '@mui/icons-material/Edit';
+import { HOMEHREF } from '../constants';
 
 const EmptyContainer = () => (
     <div className="empty-container" style={{ width: '100%', height: '56px' }} />
 );
 
-const Header = () => {
+const Header = ({ onSearchSubmit }) => {
     const location = useLocation();
     const currentPath = location.pathname;
+    const [searchText, setSearchText] = useState('');
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            let type = 'title';
+            let data = searchText;
+
+            if (searchText.startsWith('@')) {
+                type = 'person';
+                data = searchText.slice(1); // Remove the '@' symbol
+            }
+
+            onSearchSubmit(type, data);
+        }
+    };
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Backspace') {
+            setSearchText('');
+            onSearchSubmit('random', ''); // Type is set to 'random' when Backspace is pressed
+        }
+    };
 
     return (
         <header className='header-style'>
@@ -21,27 +43,28 @@ const Header = () => {
                 </NavLink>
             </div>
 
-            {currentPath === "/" ? (
+            {currentPath === HOMEHREF ? (
                 <div className="search-bar">
-                <TextField
-                    fullWidth
-                    label='Search'
-                    // variant='filled'
-                    InputProps={{
-                        style: {
-                            borderRadius: "10px"
-                        }
-                    }}
-                />
-            </div>
+                    <TextField
+                        fullWidth
+                        label='Search'
+                        InputProps={{
+                            style: {
+                                borderRadius: "10px"
+                            }
+                        }}
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        onKeyDown={handleKeyDown}
+
+                    />
+                </div>
             ) : <EmptyContainer />}
 
             <NavLink to="/profile">
                 <PersonRoundedIcon className='profile-icon' style={{ fontSize: '2rem' }} />
             </NavLink>
-            {/* <NavLink to="/updateprofile">
-                <EditIcon className='profile-icon' style={{ fontSize: '2rem' }} />
-            </NavLink> */}
         </header>
     );
 };
