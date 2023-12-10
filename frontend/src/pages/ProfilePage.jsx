@@ -9,6 +9,8 @@ import ProfileInfo from '../components/ProfileInfo';
 import Header from '../components/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import * as userActions from '../actions/userAction';
+import UserCard from '../components/UserCard';
+import users from '../data/UserData';
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -61,9 +63,17 @@ const ProfilePage = () => {
             <PostLayout feed={feedWithOwnerAndPhoto} />
           )}
 
-          {tabValue === 1 && <div>followers</div>}
+          {tabValue === 1 && <div>
+            {users.map((user, index) => (
+              <UserCard key={index} user={user} showDeleteButton={false} />
+            ))}
+          </div>}
 
-          {tabValue === 2 && <div>following</div>}
+          {tabValue === 2 && <div>
+            {users.map((user, index) => (
+              <UserCard key={index} user={user} showDeleteButton={true} />
+            ))}
+          </div>}
         </div>
       </div></div>
   );
