@@ -1,13 +1,13 @@
-import {UPDATE_METADATA} from '../constants.js' ;
+import { UPDATE_METADATA } from '../constants.js';
 
-export default (state = { metadata: {} }, action) => {
+export default (metadata = { name: '', photo: '', bio: ' ' }, action) => {
     switch (action.type) {
         case UPDATE_METADATA:
             return {
-                ...state,
-                metadata: { ...state, ...action.payload }
+                ...metadata,
+                ...action.payload
             };
         default:
-            return state;
+            return metadata;
     }
 }

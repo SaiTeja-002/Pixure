@@ -14,6 +14,7 @@ const Header = ({ onSearchSubmit }) => {
     const currentPath = location.pathname;
     const [searchText, setSearchText] = useState('');
 
+    //Search Title or Person
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
             let type = 'title';
@@ -21,17 +22,18 @@ const Header = ({ onSearchSubmit }) => {
 
             if (searchText.startsWith('@')) {
                 type = 'person';
-                data = searchText.slice(1); // Remove the '@' symbol
+                data = searchText.slice(1);
             }
 
             onSearchSubmit(type, data);
         }
     };
 
+    //BackSpace = Clear textfield
     const handleKeyDown = (event) => {
         if (event.key === 'Backspace') {
             setSearchText('');
-            onSearchSubmit('random', ''); // Type is set to 'random' when Backspace is pressed
+            onSearchSubmit('random', '');
         }
     };
 

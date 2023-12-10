@@ -15,7 +15,6 @@ const HomePage = () => {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        console.log("just to be safe")
         dispatch(postActions.getFeed())
     }, [dispatch]);
 

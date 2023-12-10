@@ -1,4 +1,5 @@
 import * as api from '../api/authAPI.js';
+import { fetchInfo } from '../api/userAPI.js';
 import { COOKIE, HOMEHREF } from '../constants.js';
 
 //Login Function : Saves Cookie To Window

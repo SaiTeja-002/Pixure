@@ -28,7 +28,7 @@ export const searchPost = (title) => async (dispatch) => {
 };
 
 //Adds Post to DB
-export const addPost = async (image, title, tags) => {
+export const addPost = (image, title, tags) => async (dispatch) => {
     try {
         let cookie = window.sessionStorage.getItem(COOKIE);
         let postInfo = { image, title, tags };
