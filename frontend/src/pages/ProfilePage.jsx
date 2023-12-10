@@ -19,7 +19,14 @@ const ProfilePage = () => {
   }, [dispatch])
 
   let posts = useSelector((state) => state.posts);
-  console.log(posts);
+  let userInfo = useSelector((state) => state.user);
+  const feedWithOwnerAndPhoto = posts.map(post => {
+    return {
+      ...post,
+      owner: userInfo.name,
+      photo: userInfo.photo
+    };
+  });
 
   return (
     <div><Header />

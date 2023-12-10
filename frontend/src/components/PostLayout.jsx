@@ -8,8 +8,6 @@ const PostLayout = ({ feed }) => {
     const location = useLocation();
     const path = location.pathname;
     const design = path == HOMEHREF ? { height: "85vh", padding: "20px" } : { paddingTop: '40px' }
-    const avatarUrl = 'https://wallpapercave.com/wp/wp4308980.jpg';
-    const username = 'Levi Chan';
     const [showUser, setShowUser] = useState(Array(feed.length).fill(false));
 
     return (
@@ -20,15 +18,15 @@ const PostLayout = ({ feed }) => {
                         <ImageComponent
                             key={i}
                             src={post.image}
-                            title="Hello"
+                            title= {post.title}
                             showUser={showUser[i]}
                             setShowUser={(value) => {
                                 const updatedShowUser = [...showUser];
                                 updatedShowUser[i] = value;
                                 setShowUser(updatedShowUser);
                             }}
-                            avatarUrl={avatarUrl}
-                            username={username}
+                            avatarUrl={post.photo}
+                            username={post.owner}
                         />
                     ))}
                 </Masonry>
