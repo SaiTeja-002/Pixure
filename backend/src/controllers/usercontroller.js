@@ -305,13 +305,14 @@ export const profileInfo = async (req, res) => {
         let profileInfo = {
             name: user.name,
             bio: user.bio,
+            photo : user.photo,
             followersCount: user.followers.length,
             followingCount: user.following.length,
         };
 
         //Owner Field Id -> To Owner Name
         let posts =  await extractPostsFromList(user.posts);
-        let modifiedPosts = await extractOwnerInfo(posts);
+        let modifiedPosts = posts.map(({ owner, ...rest }) => rest);
         profileInfo.posts = modifiedPosts;
 
         res.status(200).json(profileInfo);
