@@ -58,7 +58,7 @@ const ProfilePage = () => {
 
         <div className="tab-content">
           {tabValue === 0 && (
-            <PostLayout feed={posts} />
+            <PostLayout feed={feedWithOwnerAndPhoto} />
           )}
 
           {tabValue === 1 && <div>followers</div>}
