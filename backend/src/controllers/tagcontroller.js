@@ -48,7 +48,7 @@ export const searchHashtagsByName = async (req, res) => {
         //Post Id -> Post with Raw Info -> Post With Right Info
         let posts = await extractPostsFromList(postIds);
         let modifiedPosts = await extractOwnerInfo(posts);
-
+        
         res.status(200).json({ posts : modifiedPosts});
     } catch (error) {
         console.error(error);
