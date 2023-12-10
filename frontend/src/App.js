@@ -1,7 +1,5 @@
-import logo from './logo.svg';
-import { BrowserRouter as Router, Route, Routes, Link, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
 import './App.css';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
@@ -9,11 +7,8 @@ import ErrorPage from './pages/ErrorPage';
 import ProfilePage from './pages/ProfilePage';
 import UpdateProfilePage from './pages/UpdateProfilePage';
 import AddPost from './pages/AddPostPage';
-import StaggeredLayout from './pages/StaggeredLayout';
-import Header from './components/Header';
 import AddNewGig from './pages/AddNewGig';
 import SignupPage from './pages/SignupPage';
-import ProfilePage2 from './pages/ProfilePage2';
 
 const App = () => {
 
@@ -42,15 +37,7 @@ const App = () => {
     },
   };
 
-  // const location = useLocation();
-  // const hidePages = ['/login', '/signup'];
-  // const hide = hidePages.includes(location.pathname);
-
   return (
-    // <LoginPage />
-    // <HomePage />
-    // <MyWrapper />
-    // <ThemeProvider theme={theme}>
       <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -59,12 +46,10 @@ const App = () => {
             <Route path="/addpost" element={<AddPost />} />
             <Route path="/gig" element={<AddNewGig />} />
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/profile2" element={<ProfilePage2 />} />
             <Route path="/updateprofile" element={<UpdateProfilePage />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
       </Router>
-    // </ThemeProvider>
   );
 }
 

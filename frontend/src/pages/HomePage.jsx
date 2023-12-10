@@ -1,4 +1,4 @@
-import React, { useEffect,useRef } from 'react';
+import React, { useEffect,useRef, useState } from 'react';
 import TagBar from '../components/TagBar.jsx';
 import Header from '../components/Header.jsx';
 import '../styles/Home.css';
@@ -7,12 +7,15 @@ import * as postActions from '../actions/postAction.js';
 import * as tagsActions from '../actions/tagsAction.js';
 import { useDispatch, useSelector } from 'react-redux';
 import PostLayout from '../components/PostLayout.jsx';
+import VisitProfile from './VisitProfile.jsx';
 
 const HomePage = () => {
     const searchActive = useRef(false);
+    const [profileName,setProfilName]  = useState(null); 
 
     const dispatch = useDispatch();
     useEffect(() => {
+        console.log("just to be safe")
         dispatch(postActions.getFeed())
     }, [dispatch]);
 
@@ -28,17 +31,18 @@ const HomePage = () => {
 
     //Handles Feed When A Search is Selected
     const handleSearchChange = (type,data) => {
-        searchActive.current = true;
         if(type == "person" && data != ""){
-            //Profile Search Left
-            console.log(`person search : ${data}`);
+            setProfilName(data);
+            searchActive.current = true;
         }
         else if (type == "title" && data != ""){
             dispatch(postActions.searchPost(data));
+            searchActive.current = true;
         }
         else if (type == "random"){
             dispatch(postActions.getFeed());
             searchActive.current = false;
+            setProfilName(null);
         }
     }
 
@@ -49,7 +53,7 @@ const HomePage = () => {
         <div>
             <Header onSearchSubmit={handleSearchChange}/>
             <TagBar onTagChange={handleTagChange} searchActive={searchActive.current}/>
-            <PostLayout feed={feed}/>
+            {profileName == null ? <PostLayout feed={feed}/> : <VisitProfile name={profileName} />}
         </div>
     );
 };

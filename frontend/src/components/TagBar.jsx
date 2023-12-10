@@ -6,7 +6,10 @@ const TagBar = ({ onTagChange, searchActive}) => {
     const [selectedTag, setSelectedTag] = useState(null);
 
     const handleChipClick = (tag) => {
-        setSelectedTag(tag === selectedTag ? null : tag);
+        if(!searchActive){
+            setSelectedTag(tag === selectedTag ? null : tag);
+        }
+
         if (onTagChange) {
             onTagChange(tag === selectedTag ? null : tag);
         }
@@ -17,6 +20,10 @@ const TagBar = ({ onTagChange, searchActive}) => {
         'Art', 'Fashion', 'Technology', 'Music', 'Sports',
         'Adventure', 'Health', 'Science', 'Books', 'Gaming', 'Mindfulness', 'Creativity'
     ];
+
+    if(searchActive && selectedTag){
+        setSelectedTag(null);
+    }
 
     return (
         <div className="hashtags">

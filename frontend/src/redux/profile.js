@@ -1,14 +1,11 @@
 import { FETCH_PROFILE } from "../constants";
 
-export default (state = { profile: {} }, action) => {
+export default (profile = { name: "", bio: "", photo: "", posts: [],followerCount : 0,followingCount : 0 }, action) => {
     switch (action.type) {
         case FETCH_PROFILE:
-            return {
-                ...state,
-                profile: action.payload
-            };
+            return action.payload;
 
         default:
-            return state;
+            return profile;
     }
 }
