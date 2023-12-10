@@ -1,62 +1,38 @@
-// import React from 'react';
+import React, { useState } from 'react';
+import { FiDownload } from 'react-icons/fi';
+import '../styles/ImageComponent.css';
 
-// const ImageComponent = ({ imageUrl, maxWidthThreshold, maxHeightThreshold }) => {
-//   const style = {};
-  
-//   // Check if width or height exceeds the threshold
-//   if (maxWidthThreshold && maxHeightThreshold) {
-//     style.maxWidth = `${maxWidthThreshold}px`;
-//     style.maxHeight = `${maxHeightThreshold}px`;
-//   } else if (maxWidthThreshold) {
-//     style.maxWidth = `${maxWidthThreshold}px`;
-//   } else if (maxHeightThreshold) {
-//     style.maxHeight = `${maxHeightThreshold}px`;
-//   }
-
-//   return (
-//     <img src={imageUrl} alt="Example" style={style} />
-//   );
-// };
-
-// export default ImageComponent;
-
-
-import React, { useEffect, useState } from 'react';
-
-const ImageComponent = ({ imageUrl }) => {
-  const [maxWidthThreshold, setMaxWidthThreshold] = useState(null);
-  const [maxHeightThreshold, setMaxHeightThreshold] = useState(null);
-
-  useEffect(() => {
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
-
-    const newMaxWidthThreshold = screenWidth * 0.3;
-    const newMaxHeightThreshold = screenHeight * 0.3;
-
-    setMaxWidthThreshold(newMaxWidthThreshold);
-    setMaxHeightThreshold(newMaxHeightThreshold);
-
-    const handleResize = () => {
-      const newScreenWidth = window.innerWidth;
-      const newScreenHeight = window.innerHeight;
-
-      const adjustedMaxWidthThreshold = newScreenWidth * 0.3;
-      const adjustedMaxHeightThreshold = newScreenHeight * 0.3;
-
-      setMaxWidthThreshold(adjustedMaxWidthThreshold);
-      setMaxHeightThreshold(adjustedMaxHeightThreshold);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+const ImageComponent = ({ src, title, showUser, setShowUser, avatarUrl, username }) => {
+  const [hovered, setHovered] = useState(false);
 
   return (
-    <img src={imageUrl} alt="SelectedImage" style={{ maxWidth: `${maxWidthThreshold}px`, maxHeight: `${maxHeightThreshold}px` }} />
+    <div
+      className="image-component"
+      onMouseEnter={() => {
+        setHovered(true);
+        setShowUser(true);
+      }}
+      onMouseLeave={() => {
+        setHovered(false);
+        setShowUser(false);
+      }}
+    >
+      <img src={src} alt={title} />
+      {hovered && (
+        <div className="overlay">
+          <div>
+            <FiDownload />
+          </div>
+          <div>{title}</div>
+        </div>
+      )}
+      {showUser && hovered && (
+        <div className="user-details">
+          <img src={avatarUrl} alt="Avatar" />
+          <span>{username}</span>
+        </div>
+      )}
+    </div>
   );
 };
 
