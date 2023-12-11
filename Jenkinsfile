@@ -1,7 +1,8 @@
 pipeline {
     environment {
         registry = "SaiTeja-002/Pixure"
-        dockerImage = ""
+        serverImage = ""
+        clientImage = ""
     }
     agent any
     stages {
@@ -25,6 +26,16 @@ pipeline {
                 dir('frontend') {
                     sh 'npm install'
                     sh 'npm test'
+                }
+            }
+        }
+        stage('Stage 3: DockerBuild'){
+            steps {
+                dir('backend') {
+                    serverImage = docker.build registry + ":latest"
+                }
+                dir('frontend') {
+                    clientImage = docker.build registry + ":latest" 
                 }
             }
         }
