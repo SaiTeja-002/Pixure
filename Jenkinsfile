@@ -57,6 +57,7 @@ pipeline {
         stage('Stage 5: Ansible Deployment'){
             steps{
                 ansiblePlaybook colorized: true, 
+                credentialsId: 'localhost',
                 disableHostKeyChecking: true, 
                 installation: 'Ansible', 
                 inventory: 'inventory', 
