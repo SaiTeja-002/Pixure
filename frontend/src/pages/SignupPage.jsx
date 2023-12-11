@@ -64,26 +64,19 @@ const SignupPage = () => {
                         <div className='text-field'>
                             <TextField
                                 fullWidth
-                                label='Password'
+                                label='password'
+                                type='password'
                                 value={password}
                                 onChange={(event) => {
                                     setPassword(event.target.value);
                                 }}
                                 InputProps={{
                                     style: {
-                                        borderRadius: "10px"
-                                    }
+                                        borderRadius: '10px',
+                                    },
                                 }}
                             />
                         </div>
-
-                        {/* <input
-                            type="username"
-                            placeholder="username"
-                            value="username"
-                            // onChange={(e) => this.setState({ username: e.target.value })}
-                            style={{ padding: "10px", marginBottom: "15px", borderRadius: "10px", fontSize: "16px" }}
-                        /> */}
                     </div>
 
                     <button className="button" onClick={async () => { await handleSignup() }}>
