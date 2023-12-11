@@ -1,4 +1,4 @@
-import { ADD_CONTENT, FETCH_CONTENT, REMOVE_CONTENT } from "../constants";
+import { ADD_CONTENT, EDIT_POST, FETCH_CONTENT, REMOVE_CONTENT } from "../constants";
 
 export default (content = [], action) => {
     switch (action.type) {
@@ -10,6 +10,14 @@ export default (content = [], action) => {
 
         case REMOVE_CONTENT:
             return content.filter(item => item !== action.payload);
+
+        case EDIT_POST:
+            return content.map((item, index) => {
+                if (content.length-1-index === action.payload.index) {
+                    return { ...item, title: action.payload.title };
+                }
+                return item;
+            });
 
         default:
             return content;

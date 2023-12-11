@@ -17,6 +17,7 @@ const PostLayout = ({ feed }) => {
                     {feed.map((post, i) => (
                         <ImageComponent
                             key={i}
+                            index={i}
                             src={post.image}
                             title= {post.title}
                             showUser={showUser[i]}

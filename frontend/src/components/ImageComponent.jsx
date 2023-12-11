@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiDownload, FiEdit3, FiTrash2 } from 'react-icons/fi';
 import '../styles/ImageComponent.css';
 import EditPopup from './EditPopUp';
+import { useDispatch, useSelector } from 'react-redux';
+import { triggerBase64Download } from 'react-base64-downloader';
+import * as userActions from '../actions/userAction';
 
-const ImageComponent = ({ src, title, showUser, setShowUser, isAuthor = true, avatarUrl, username }) => {
+
+const ImageComponent = ({src, title, showUser, setShowUser, avatarUrl, username,index }) => {
   const [hovered, setHovered] = useState(false);
   const [showEditPopup, setShowEditPopup] = useState(false); // State to control the edit pop-up display
   const [editedTitle, setEditedTitle] = useState(title);
+  const [isAuthor, updateAuthor] = useState(false);
 
-  const handleUpdateTitle = (newTitle) => {
-    // Logic to update the title (you might have your own method)
-    console.log('New Title:', newTitle);
+  const sessionInfo = useSelector((state) => state.user);
+  useEffect(() => {
+    updateAuthor(sessionInfo.name == username);
+  }, [sessionInfo]);
+
+  const dispatch = useDispatch();
+
+  const handleUpdateTitle = (newTitle) => { 
+    dispatch(userActions.editPost(index,newTitle));
     setEditedTitle(newTitle);
-    setShowEditPopup(false); // Close the edit pop-up after updating
+    setShowEditPopup(false); 
   };
 
   return (
@@ -38,7 +49,7 @@ const ImageComponent = ({ src, title, showUser, setShowUser, isAuthor = true, av
               <FiTrash2 />
             </div>}
             <div className='action-button download'>
-              <FiDownload />
+              <FiDownload onClick={() => triggerBase64Download(src,title)} />
             </div>
           </div>
           <div>{title}</div>
