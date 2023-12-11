@@ -58,5 +58,31 @@ export const searchHashtagsByName = async (req, res) => {
     }
 };
 
+// Removes References of the post in tags
+export const removePostReferences = async (req, res) => {
+    try {
+        const postTags = req.body.tags;
+        const postId = req.body.postId;
+
+        // Iterate through each tag & Remove References
+        for (const tag of postTags) {
+            const hashtag = await Hashtag.findOne({ name: tag });
+
+            if (hashtag) {
+                hashtag.images = hashtag.images.filter(imageId => imageId !== postId);
+                await hashtag.save();
+            }
+        }
+
+        res.status(200).json({ message: 'Post references removed successfully from tags' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+
+
+
 
 

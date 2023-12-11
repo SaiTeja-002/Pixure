@@ -324,3 +324,62 @@ export const profileInfo = async (req, res) => {
         res.status(500).json({ message: 'Something went wrong' });
     }
 };
+
+//Edits The Post Based on Index
+export const editPost = async (req, res, next) => {
+    try {
+        //Extracting Info From Body
+        let userId = req.body.userId;
+        let postIndex = req.params.index;
+
+        const user = await User.findOne({ _id: userId });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const posts = user.posts;
+
+        const reversedIndex = posts.length - 1 - postIndex;
+        const postIdToUpdate = posts[reversedIndex];
+        req.body.postId = postIdToUpdate;
+        if (postIdToUpdate) {
+            next(); //-> editTitle in Post
+        } else {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+    }
+    catch {
+        console.error(error);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+}
+
+//Delete The Given Post
+export const deletePost = async (req, res, next) => {
+    try {
+        // Extracting Info From Body
+        let userId = req.body.userId;
+        let postIndex = req.params.index;
+
+        const user = await User.findOne({ _id: userId });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const posts = user.posts;
+
+        const reversedIndex = posts.length - 1 - postIndex;
+        const postIdToDelete = posts[reversedIndex];
+
+        if (postIdToDelete) {
+            await User.updateOne({ _id: userId }, { $pull: { posts: postIdToDelete } });
+            req.body.postId = postIdToDelete;
+            next(); // removePost in Post
+        } else {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};

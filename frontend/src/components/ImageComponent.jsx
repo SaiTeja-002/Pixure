@@ -7,7 +7,7 @@ import { triggerBase64Download } from 'react-base64-downloader';
 import * as userActions from '../actions/userAction';
 
 
-const ImageComponent = ({src, title, showUser, setShowUser, avatarUrl, username,index }) => {
+const ImageComponent = ({ src, title, showUser, setShowUser, avatarUrl, username, index }) => {
   const [hovered, setHovered] = useState(false);
   const [showEditPopup, setShowEditPopup] = useState(false); // State to control the edit pop-up display
   const [editedTitle, setEditedTitle] = useState(title);
@@ -20,10 +20,10 @@ const ImageComponent = ({src, title, showUser, setShowUser, avatarUrl, username,
 
   const dispatch = useDispatch();
 
-  const handleUpdateTitle = (newTitle) => { 
-    dispatch(userActions.editPost(index,newTitle));
+  const handleUpdateTitle = (newTitle) => {
+    dispatch(userActions.editPost(index, newTitle));
     setEditedTitle(newTitle);
-    setShowEditPopup(false); 
+    setShowEditPopup(false);
   };
 
   return (
@@ -45,11 +45,11 @@ const ImageComponent = ({src, title, showUser, setShowUser, avatarUrl, username,
             {isAuthor && <div className='action-button edit' onClick={() => setShowEditPopup(true)}>
               <FiEdit3 />
             </div>}
-            {isAuthor && <div className='action-button delete'>
+            {isAuthor && <div className='action-button delete' onClick={() => dispatch(userActions.removePost(index))}>
               <FiTrash2 />
             </div>}
             <div className='action-button download'>
-              <FiDownload onClick={() => triggerBase64Download(src,title)} />
+              <FiDownload onClick={() => triggerBase64Download(src, title)} />
             </div>
           </div>
           <div>{title}</div>

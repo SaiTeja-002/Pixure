@@ -1,5 +1,5 @@
 import * as api from '../api/userAPI.js';
-import { COOKIE, EDIT_POST, FETCH_CONTENT, FETCH_PROFILE, FETCH_SOCIAL, LOGINHREF, UNFOLLOW, UPDATE_METADATA } from '../constants.js';
+import { COOKIE, EDIT_POST, FETCH_CONTENT, FETCH_PROFILE, FETCH_SOCIAL, LOGINHREF, REMOVE_CONTENT, UNFOLLOW, UPDATE_METADATA } from '../constants.js';
 
 //Gets User Info
 export const fetchInfo = () => async (dispatch) => {
@@ -99,6 +99,19 @@ export const editPost = (index, title) => async (dispatch) => {
         let cookie = window.sessionStorage.getItem(COOKIE);
         let { data, status } = await api.editPost(cookie, index, { title: title });
         dispatch({ type: EDIT_POST, payload: { index: index, title: title } })
+    } catch (error) {
+        let { data, status } = error.response;
+        console.log(data.message);
+        (status == 401) && (window.location.href = LOGINHREF);
+    }
+}
+
+//Removes Post
+export const removePost = (index) => async (dispatch) => {
+    try {
+        let cookie = window.sessionStorage.getItem(COOKIE);
+        let { data, status } = await api.removePost(cookie, index);
+        dispatch({ type: REMOVE_CONTENT, payload: { index: index } })
     } catch (error) {
         let { data, status } = error.response;
         console.log(data.message);

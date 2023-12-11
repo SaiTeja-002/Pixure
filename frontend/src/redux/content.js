@@ -9,7 +9,7 @@ export default (content = [], action) => {
             return [...content, action.payload];
 
         case REMOVE_CONTENT:
-            return content.filter(item => item !== action.payload);
+            return content.filter((item, index) => content.length - 1 - index !== action.payload.index);
 
         case EDIT_POST:
             return content.map((item, index) => {

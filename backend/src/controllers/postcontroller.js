@@ -96,4 +96,52 @@ export const randomPosts = async (req, res) => {
     }
 };
 
+//Updates Title of the Post
+export const editTitle = async (req, res) => {
+    try {
+        const postIdToUpdate = req.body.postId;
+        const newTitle = req.body.title;
+
+        const updatedPost = await Post.findByIdAndUpdate(postIdToUpdate, { title: newTitle });
+
+        if (updatedPost) {
+            return res.status(200).json({ message: 'Post title updated successfully'});
+        } else {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+// Deletes the Post
+export const removePost = async (req, res, next) => {
+    try {
+        const postIdToDelete = req.body.postId;
+        const postToDelete = await Post.findById(postIdToDelete);
+
+        if (!postToDelete) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        //Deleting Post
+        const deletedPost = await Post.findByIdAndDelete(postIdToDelete);
+
+        if (deletedPost) {
+            const tags = postToDelete.tags;
+            req.body.tags = tags;
+            next();
+        } else {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+
+
+
 
