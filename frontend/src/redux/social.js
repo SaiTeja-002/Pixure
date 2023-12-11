@@ -12,7 +12,7 @@ export default (social = { following: [], followers: [] }, action) => {
             };
 
         case UNFOLLOW:
-            const updatedFollowing = social.following.filter(item => item !== action.payload);
+            const updatedFollowing = social.following.filter(user => user.name !== action.payload);
             return {
                 ...social,
                 following: updatedFollowing

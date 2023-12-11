@@ -1,5 +1,9 @@
 import * as api from '../api/userAPI.js';
-import { COOKIE, EDIT_POST, FETCH_CONTENT, FETCH_PROFILE, FETCH_SOCIAL, LOGINHREF, REMOVE_CONTENT, UNFOLLOW, UPDATE_METADATA } from '../constants.js';
+import {
+    COOKIE, EDIT_POST, FETCH_CONTENT,
+    FETCH_PROFILE, FETCH_SOCIAL, FOLLOW_REQUEST, LOGINHREF,
+    REMOVE_CONTENT, UNFOLLOW, UPDATE_METADATA, FOLLOW
+} from '../constants.js';
 
 //Gets User Info
 export const fetchInfo = () => async (dispatch) => {
@@ -19,7 +23,6 @@ export const fetchProfile = (name) => async (dispatch) => {
     try {
         let cookie = window.sessionStorage.getItem(COOKIE);
         let { data, status } = await api.fetchProfile(cookie, name);
-        console.log(data);
         dispatch({ type: FETCH_PROFILE, payload: data });
     } catch (error) {
         let { data, status } = error.response;
@@ -85,7 +88,8 @@ export const followUser = (name) => async (dispatch) => {
     try {
         let cookie = window.sessionStorage.getItem(COOKIE);
         let { data, status } = await api.followUser(cookie, { account: name });
-        dispatch({ type: UNFOLLOW, payload: name });
+        dispatch({ type: FOLLOW, payload: name });
+        dispatch({ type: FOLLOW_REQUEST, payload: {} })
     } catch (error) {
         let { data, status } = error.response;
         console.log(data.message);

@@ -25,9 +25,8 @@ const VisitProfile = ({ name }) => {
     }, [profile]);
 
 
-    const followUser = () =>{
+    const followUser = () => {
         dispatch(userActions.followUser(name));
-        dispatch({type : FOLLOW,action : name});
     }
 
     return (
