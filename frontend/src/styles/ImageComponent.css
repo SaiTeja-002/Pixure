@@ -9,6 +9,56 @@
     display: block;
 }
 
+.action-button {
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    font-size: larger;
+    cursor: default;
+    position: relative;
+}
+
+.action-button svg {
+    cursor: pointer;
+}
+
+/* .action-button.edit:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: auto;
+    width: 20px;
+    height: 100%;
+    background-color: rgba(75, 75, 75, 0.8);
+    border-radius: 4px;
+    z-index: 1;
+}
+
+.action-button.download:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: auto;
+    right: auto;
+    width: 20px;
+    height: 100%;
+    background-color: rgba(77, 162, 77, 0.3);
+    border-radius: 4px;
+    z-index: 1;
+}
+
+.action-button.delete:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: auto;
+    width: 20px;
+    height: 100%;
+    background-color: rgba(246, 20, 20, 0.268);
+    border-radius: 4px;
+    z-index: 1;
+} */
+
 .overlay {
     position: absolute;
     top: 0;
@@ -20,7 +70,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 8px;
+    padding: 10px;
 }
 
 .overlay>div {
@@ -29,11 +79,11 @@
 
 .overlay>div>svg {
     font-size: 24px;
+    cursor: pointer;
 }
 
 .overlay>div:last-child {
     text-align: left;
-    margin-bottom: 8px;
 }
 
 .user-details {
@@ -56,4 +106,57 @@
     color: #fff;
     font-size: 18px;
     font-weight: bold;
+}
+
+.edit-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.edit-popup {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 80%;
+}
+
+.image-preview {
+    max-height: 60vh;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.image-preview img {
+    max-width: 100%;
+    height: auto;
+}
+
+.edit-details input {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.edit-details button {
+    padding: 8px 16px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-details button:last-child {
+    margin-right: 0;
 }
