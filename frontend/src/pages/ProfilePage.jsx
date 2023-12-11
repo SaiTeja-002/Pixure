@@ -10,7 +10,6 @@ import Header from '../components/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import * as userActions from '../actions/userAction';
 import UserCard from '../components/UserCard';
-import users from '../data/UserData';
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -18,17 +17,32 @@ const ProfilePage = () => {
 
   useEffect(() => {
     dispatch(userActions.fetchPosts());
+    dispatch(userActions.fetchSocial());
   }, [dispatch])
 
   let posts = useSelector((state) => state.posts);
   let userInfo = useSelector((state) => state.user);
-  const feedWithOwnerAndPhoto = posts.map(post => {
-    return {
-      ...post,
-      owner: userInfo.name,
-      photo: userInfo.photo
-    };
-  });
+  let social = useSelector((state) => state.social);
+
+  const [feedWithOwnerAndPhoto, updateFeed] = useState([]);
+  const [following,setFollowing] = useState([]);
+  const [followers,setFollowers] = useState([]);
+
+  useEffect(() => {
+
+    updateFeed(posts.map(post => {
+      return {
+        ...post,
+        owner: userInfo.name,
+        photo: userInfo.photo
+      };
+    }).reverse())
+  }, [posts, userInfo])
+
+  useEffect(() =>{
+    setFollowing(social.following)
+    setFollowers(social.followers)
+  },[social])
 
   return (
     <div><Header />
@@ -64,13 +78,13 @@ const ProfilePage = () => {
           )}
 
           {tabValue === 1 && <div>
-            {users.map((user, index) => (
+            {followers.map((user, index) => (
               <UserCard key={index} user={user} showDeleteButton={false} />
             ))}
           </div>}
 
           {tabValue === 2 && <div>
-            {users.map((user, index) => (
+            {following.map((user, index) => (
               <UserCard key={index} user={user} showDeleteButton={true} />
             ))}
           </div>}

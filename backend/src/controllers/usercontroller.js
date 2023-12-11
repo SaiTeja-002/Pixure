@@ -135,25 +135,25 @@ export const getSocialList = async (req, res) => {
 };
 
 //Returners Posts
-export const getPosts = async (req,res) => {
-    try{
+export const getPosts = async (req, res) => {
+    try {
         let userId = req.body.userId;
         let user = await User.findById(userId);
 
-        if(!user){
-            return res.status(404).json({message : 'User not found'});
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
         }
 
         let posts = await extractPostsFromList(user.posts);
-        
+
         //Removing Owner field - Already Known
         posts = posts.map(post => ({ title: post.title, image: post.image }));
 
-        res.status(200).json({posts : posts});
+        res.status(200).json({ posts: posts });
 
-    }catch(error){
+    } catch (error) {
         console.error(error);
-        res.status(500).json({message : "Something went wrong"});
+        res.status(500).json({ message: "Something went wrong" });
     }
 }
 
@@ -249,7 +249,6 @@ export const unfollowUser = async (req, res) => {
 
         // Saving the changes to the database
         await Promise.all([currentUser.save(), otherUser.save()]);
-
         res.status(200).json({ message: `You have unfollowed ${otherUserName}` });
     } catch (error) {
         console.error(error);
@@ -260,8 +259,8 @@ export const unfollowUser = async (req, res) => {
 //Adds Post to User's List
 export const addPost = async (req, res, next) => {
     try {
-        const postId = req.body.postId; 
-        const userId = req.body.userId; 
+        const postId = req.body.postId;
+        const userId = req.body.userId;
 
         const user = await User.findById(userId);
         if (!user) {
@@ -280,9 +279,9 @@ export const addPost = async (req, res, next) => {
 };
 
 //Extracts info of Posts Owner
-export const extractOwnerInfo = async(posts) =>{
+export const extractOwnerInfo = async (posts) => {
     let newPosts = posts;
-    for(let i=0;i<posts.length;i++){
+    for (let i = 0; i < posts.length; i++) {
         let post = newPosts[i];
         let owner = await User.findById(post.owner)
         newPosts[i].owner = owner.name;
@@ -295,6 +294,7 @@ export const extractOwnerInfo = async(posts) =>{
 export const profileInfo = async (req, res) => {
     try {
         let userName = req.params.name;
+        let loggedInUserId = req.body.userId;
 
         let user = await User.findOne({ name: userName });
         if (!user) {
@@ -302,16 +302,19 @@ export const profileInfo = async (req, res) => {
         }
 
         // Extract Profile Info
+        let isFollowing = user.followers.includes(loggedInUserId) || user._id == loggedInUserId;
+
         let profileInfo = {
             name: user.name,
             bio: user.bio,
-            photo : user.photo,
-            followersCount: user.followers.length,
+            photo: user.photo,
+            followerCount: user.followers.length,
             followingCount: user.following.length,
+            isFollowing: isFollowing,
         };
 
-        //Owner Field Id -> To Owner Name
-        let posts =  await extractPostsFromList(user.posts);
+        // Owner Field Id -> To Owner Name
+        let posts = await extractPostsFromList(user.posts);
         let modifiedPosts = posts.map(({ owner, ...rest }) => rest);
         profileInfo.posts = modifiedPosts;
 

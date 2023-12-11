@@ -1,5 +1,5 @@
 import * as api from '../api/postAPI.js';
-import { COOKIE, LOGINHREF, UPDATE_FEED } from '../constants.js';
+import { ADD_CONTENT, COOKIE, LOGINHREF, UPDATE_FEED } from '../constants.js';
 
 //Gets User Feed
 export const getFeed = () => async (dispatch) => {
@@ -33,6 +33,7 @@ export const addPost = (image, title, tags) => async (dispatch) => {
         let cookie = window.sessionStorage.getItem(COOKIE);
         let postInfo = { image, title, tags };
         let { status } = await api.addPost(cookie, postInfo);
+        dispatch({ type: ADD_CONTENT, payload: postInfo });
     } catch (error) {
         let { data, status } = error.response;
         console.log(data.message);

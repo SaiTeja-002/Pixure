@@ -1,44 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PostLayout from '../components/PostLayout';
-import images from '../data/ImageData';
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import '../styles/VisitProfile.css'
 import { useDispatch, useSelector } from 'react-redux';
-import * as UserActions from '../actions/userAction.js';
+import * as userActions from '../actions/userAction.js';
+import { FOLLOW } from '../constants.js';
 
-const VisitProfile = ({ name, isFollowing }) => {
+const VisitProfile = ({ name }) => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(UserActions.fetchProfile(name));
+        dispatch(userActions.fetchProfile(name));
     }, [dispatch])
 
     let profile = useSelector((state) => state.profile);
+    const [posts, setPosts] = useState([]);
 
-    // return (
-    //     <div>
-    //         <div style={{ height: "100vh", padding: "15px" }}>
-    //             <div className="profile-container">
-    //                 <img src={profile.photo} alt="Profile Picture" className="profile-image" />
-    //             </div>
+    useEffect(() => {
+        setPosts(profile.posts.map(post => {
+            return {
+                ...post,
+                owner: profile.name,
+                photo: profile.photo
+            };
+        }).reverse());
+    }, [profile]);
 
-    //             <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-    //                 <h2>{profile.name}</h2>
-    //                 <h3>{profile.bio}</h3>
 
-    //                 <button className="button">
-    //                     Follow
-    //                 </button>
-    //             </div>
-    //             <PostLayout feed={profile.posts.map(post => ({
-    //                 ...post,
-    //                 owner: profile.name,
-    //                 photo: profile.photo,
-    //             }))} />
-    //         </div>
-    //     </div>
-    // );
-
-    const profileImageUrl = 'https://wallpapercave.com/wp/wp4308980.jpg';
+    const followUser = () =>{
+        dispatch(userActions.followUser(name));
+        dispatch({type : FOLLOW,action : name});
+    }
 
     return (
         <div>
@@ -46,59 +36,63 @@ const VisitProfile = ({ name, isFollowing }) => {
                 <div className="profile-container">
                     <div className="left-column">
                         <div className="profile-info">
-                            <img src={profileImageUrl} alt="Profile Picture" className="profile-image" />
-                            <h2>Levi Chan</h2>
-                            <h3>We can't always carry our fallen comrades home, but we carry their memory.</h3>
+                            <img src={profile.photo} alt="Profile Picture" className="profile-image" />
+                            <h2>{profile.name}</h2>
+                            <h3>{profile.bio}</h3>
                         </div>
                     </div>
                     <div className="right-column">
                         <div className="counts-section">
                             <div className="count-group">
                                 <div className="count-item">
-                                    <p>50</p>
+                                    <p>{posts.length}</p>
                                     <h3>Posts</h3>
                                 </div>
                                 <div className="count-item">
-                                    <p>509</p>
+                                    <p>{profile.followerCount}</p>
                                     <h3>Followers</h3>
                                 </div>
                                 <div className="count-item">
-                                    <p>615</p>
+                                    <p>{profile.followingCount}</p>
                                     <h3>Following</h3>
                                 </div>
                             </div>
-                            {isFollowing ? (
-                                <button className="unfollow-button">Unfollow</button>
+                            {profile.isFollowing ? (
+                                <button className="unfollow-button">Following</button>
                             ) : (
-                                <button className="button">Follow</button>
+                                <button className="button" onClick={followUser}>Follow</button>
                             )}
                         </div>
                     </div>
                 </div>
 
-                <div className="image-gallery">
-                    <ResponsiveMasonry
-                        columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
-                    >
-                        <Masonry>
-                            {images.map((image, i) => (
-                                <div key={i} style={{ margin: "10px 10px" }}>
-                                    <img
-                                        src={image}
-                                        style={{
-                                            width: "100%",
-                                            display: "block",
-                                        }}
-                                        alt="img"
-                                    />
-                                </div>
-                            ))}
-                        </Masonry>
-                    </ResponsiveMasonry>
-                </div>
+                <PostLayout feed={posts} />
+
             </div>
         </div>
     );
 };
 
 export default VisitProfile;
+
+
+{/* <div className="image-gallery">
+<ResponsiveMasonry
+    columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
+>
+    <Masonry>
+        {profile.posts.map((image, i) => (
+            <div key={i} style={{ margin: "10px 10px" }}>
+                <img
+                    src={image}
+                    style={{
+                        width: "100%",
+                        display: "block",
+                    }}
+                    alt="img"
+                />
+            </div>
+        ))}
+    </Masonry>
+</ResponsiveMasonry>
+</div> */}

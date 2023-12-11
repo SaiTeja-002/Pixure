@@ -16,3 +16,4 @@ export const FETCH_SOCIAL = "FETCH_SOCIAL";
 export const FOLLOW = "FOLLOW";
 export const UNFOLLOW = "UNFOLLOW";
 export const FETCH_PROFILE = "FETCH_PROFILE";
+export const FOLLOW_REQUEST = "FOLLOW_REQUEST";

@@ -1,5 +1,5 @@
 import * as api from '../api/userAPI.js';
-import { COOKIE, FETCH_CONTENT, FETCH_PROFILE, LOGINHREF, UPDATE_METADATA } from '../constants.js';
+import { COOKIE, FETCH_CONTENT, FETCH_PROFILE, FETCH_SOCIAL, LOGINHREF, UNFOLLOW, UPDATE_METADATA } from '../constants.js';
 
 //Gets User Info
 export const fetchInfo = () => async (dispatch) => {
@@ -19,6 +19,7 @@ export const fetchProfile = (name) => async (dispatch) => {
     try {
         let cookie = window.sessionStorage.getItem(COOKIE);
         let { data, status } = await api.fetchProfile(cookie, name);
+        console.log(data);
         dispatch({ type: FETCH_PROFILE, payload: data });
     } catch (error) {
         let { data, status } = error.response;
@@ -46,6 +47,45 @@ export const fetchPosts = () => async (dispatch) => {
         let cookie = window.sessionStorage.getItem(COOKIE);
         let { data, status } = await api.fetchPosts(cookie);
         dispatch({ type: FETCH_CONTENT, payload: data.posts });
+    } catch (error) {
+        let { data, status } = error.response;
+        console.log(data.message);
+        (status == 401) && (window.location.href = LOGINHREF);
+    }
+}
+
+//Fetch Users Followers & Following
+export const fetchSocial = () => async (dispatch) => {
+    try {
+        let cookie = window.sessionStorage.getItem(COOKIE);
+        let { data, status } = await api.fetchSocial(cookie);
+        dispatch({ type: FETCH_SOCIAL, payload: data });
+    } catch (error) {
+        let { data, status } = error.response;
+        console.log(data.message);
+        (status == 401) && (window.location.href = LOGINHREF);
+    }
+}
+
+//Unfollow User
+export const unfollowUser = (name) => async (dispatch) => {
+    try {
+        let cookie = window.sessionStorage.getItem(COOKIE);
+        let { data, status } = await api.unfollowUser(cookie,{account : name});
+        dispatch({ type: UNFOLLOW, payload: name });
+    } catch (error) {
+        let { data, status } = error.response;
+        console.log(data.message);
+        (status == 401) && (window.location.href = LOGINHREF);
+    }
+}
+
+//follow User
+export const followUser = (name) => async (dispatch) => {
+    try {
+        let cookie = window.sessionStorage.getItem(COOKIE);
+        let { data, status } = await api.followUser(cookie,{account : name});
+        dispatch({ type: UNFOLLOW, payload: name });
     } catch (error) {
         let { data, status } = error.response;
         console.log(data.message);

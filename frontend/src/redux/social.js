@@ -1,33 +1,24 @@
 import { FETCH_SOCIAL, FOLLOW, UNFOLLOW } from "../constants";
 
-export default (state = { social: {} }, action) => {
+export default (social = { following: [], followers: [] }, action) => {
     switch (action.type) {
         case FETCH_SOCIAL:
-            return {
-                ...state,
-                social: action.payload
-            };
+            return action.payload;
 
         case FOLLOW:
             return {
-                ...state,
-                social: {
-                    ...state.social,
-                    following: [...state.social.following, action.payload]
-                }
+                ...social,
+                following: [...social.following, action.payload]
             };
 
         case UNFOLLOW:
-            const updatedFollowing = state.social.following.filter(item => item !== action.payload);
+            const updatedFollowing = social.following.filter(item => item !== action.payload);
             return {
-                ...state,
-                social: {
-                    ...state.social,
-                    following: updatedFollowing
-                }
+                ...social,
+                following: updatedFollowing
             };
 
         default:
-            return state;
+            return social;
     }
 }
