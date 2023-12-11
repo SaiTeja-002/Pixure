@@ -9,6 +9,10 @@
     padding: 10px;
 }
 
+.hashtags::-webkit-scrollbar {
+    display: none;
+}
+
 .hashtag {
     display: inline-block;
     padding: 5px 10px;
