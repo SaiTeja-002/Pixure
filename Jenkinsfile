@@ -44,6 +44,13 @@ pipeline {
                 }
             }
         }
-        
+        stage('Stage 4: DockerPush'){
+            script{
+                docker.withRegistry( '', 'DockerHubCred') {
+                    serverImage.push()
+                    clientImage.push()
+                }
+            }
+        }
     }
 }
