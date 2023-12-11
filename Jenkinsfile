@@ -12,15 +12,15 @@ pipeline {
             }
         }
         stage('Stage 2: Testing') {
+            environment {
+                DB_URL = "mongodb+srv://LaxmiGenius:HdvoWTWpZ6QaKewh@cluster0.zehgzrl.mongodb.net/?retryWrites=true&w=majority"
+                PORT = 5000
+                SECRET_KEY = "shhh..."
+            }
             steps {
-                dir('backend') {                
-                    environment{
-                        DB_URL = "mongodb+srv://LaxmiGenius:HdvoWTWpZ6QaKewh@cluster0.zehgzrl.mongodb.net/?retryWrites=true&w=majority"
-                        PORT = 5000
-                        SECRET_KEY = "shhh..."    
-                    }
+                dir('backend') {
                     sh 'npm install'
-                    sh 'npm test' 
+                    sh 'npm test'
                 }
                 dir('frontend') {
                     sh 'npm install'
@@ -28,6 +28,5 @@ pipeline {
                 }
             }
         }
-
     }
 }
