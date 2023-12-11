@@ -154,18 +154,24 @@
 
 import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { TextField } from '@mui/material'
+import { TextField, IconButton, InputAdornment } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import '../styles/Login.css'
 import * as authActions from '../actions/authAction.js';
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleLogin = async () => {
         console.log('Username:', username);
         console.log('Password:', password);
-        await authActions.login(username,password);
+        await authActions.login(username, password);
+    };
+
+    const handleTogglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     return (
@@ -187,7 +193,7 @@ const LoginPage = () => {
                                 value={username}
                                 onChange={(event) => {
                                     setUsername(event.target.value);
-                                  }}
+                                }}
                                 InputProps={{
                                     style: {
                                         borderRadius: "10px"
@@ -197,6 +203,32 @@ const LoginPage = () => {
                         </div>
 
                         <div className='text-field'>
+                            <TextField
+                                fullWidth
+                                label='password'
+                                // type={showPassword ? 'text' : 'password'}
+                                type='password'
+                                value={password}
+                                onChange={(event) => {
+                                    setPassword(event.target.value);
+                                }}
+                                InputProps={{
+                                    style: {
+                                        borderRadius: '10px',
+                                    },
+                                    // endAdornment: (
+                                    //     <InputAdornment position='end'>
+                                    //         <IconButton onClick={handleTogglePasswordVisibility} edge='end'>
+                                    //             {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    //         </IconButton>
+                                    //     </InputAdornment>
+                                    // ),
+                                    // inputProps: { autoComplete: 'new-password', form: { autoComplete: 'off' } }
+                                }}
+                            />
+                        </div>
+
+                        {/* <div className='text-field'>
                             <TextField
                                 fullWidth
                                 label='password'
@@ -210,18 +242,10 @@ const LoginPage = () => {
                                     }
                                 }}
                             />
-                        </div>
-
-                        {/* <input
-                            type="username"
-                            placeholder="username"
-                            value="username"
-                            // onChange={(e) => this.setState({ username: e.target.value })}
-                            style={{ padding: "10px", marginBottom: "15px", borderRadius: "10px", fontSize: "16px" }}
-                        /> */}
+                        </div> */}
                     </div>
 
-                    <button className="button" onClick={async () => {await handleLogin();}}>
+                    <button className="button" onClick={async () => { await handleLogin(); }}>
                         Login
                     </button>
 

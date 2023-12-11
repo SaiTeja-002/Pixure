@@ -10,7 +10,6 @@
 
 .left {
     left: 0;
-    /* background-color: aliceblue; */
 }
 
 .right {
@@ -45,7 +44,6 @@
 }
 
 .text-field {
-    /* margin: 10vh 0; */
     width: 100%;
     margin-bottom: 3vh;
 }
