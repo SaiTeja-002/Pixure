@@ -33,12 +33,17 @@ pipeline {
         stage('Stage 3: DockerBuild') {
             steps {
                 dir('backend') {
-                    serverImage = docker.build SERVER_IMAGE  + ":latest"
+                    script{
+                        serverImage = docker.build SERVER_IMAGE  + ":latest"
+                    }
                 }
                 dir('frontend') {
-                    clientImage = docker.build CLIENT_IMAGE + ":latest"
+                    script{
+                        clientImage = docker.build CLIENT_IMAGE + ":latest"
+                    }
                 }
             }
         }
+        
     }
 }
