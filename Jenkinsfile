@@ -14,13 +14,15 @@ pipeline {
         stage('Stage 2: Testing') {
             steps {
                 dir('backend') {
+                    sh 'npm install'
                     sh 'npm test' 
                 }
                 dir('frontend') {
+                    sh 'npm install'
                     sh 'npm test'
                 }
             }
         }
-        
+
     }
 }
