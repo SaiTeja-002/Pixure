@@ -13,7 +13,12 @@ pipeline {
         }
         stage('Stage 2: Testing') {
             steps {
-                dir('backend') {
+                dir('backend') {                
+                    environment{
+                        DB_URL = "mongodb+srv://LaxmiGenius:HdvoWTWpZ6QaKewh@cluster0.zehgzrl.mongodb.net/?retryWrites=true&w=majority"
+                        PORT = 5000
+                        SECRET_KEY = "shhh..."    
+                    }
                     sh 'npm install'
                     sh 'npm test' 
                 }
