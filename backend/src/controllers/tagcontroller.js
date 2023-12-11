@@ -34,12 +34,13 @@ export const tagPost = async (req, res) => {
 export const searchHashtagsByName = async (req, res) => {
     try {
         let tag = req.query.tag;
+        let uid = req.body.userId;
 
         //Pattern Searching
-        const regex = new RegExp(tag, 'i'); 
+        const regex = new RegExp(tag, 'i');
         const matchingHashtags = await Hashtag.find({ name: { $regex: regex } });
 
-       //Extracting Post Ids
+        //Extracting Post Ids
         let postIds = [];
         for (const hashtag of matchingHashtags) {
             postIds = postIds.concat(hashtag.images);
@@ -47,9 +48,10 @@ export const searchHashtagsByName = async (req, res) => {
 
         //Post Id -> Post with Raw Info -> Post With Right Info
         let posts = await extractPostsFromList(postIds);
-        let modifiedPosts = await extractOwnerInfo(posts);
-        
-        res.status(200).json({ posts : modifiedPosts});
+        let filteredPosts = posts.filter(post => post.owner !== uid);
+        let modifiedPosts = await extractOwnerInfo(filteredPosts);
+
+        res.status(200).json({ posts: modifiedPosts });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });

@@ -52,22 +52,24 @@ export const extractPostsFromList = async (postIds) => {
 export const searchByTitle = async (req, res, next) => {
     try {
         let title = req.params.title;
+        let uid = req.body.userId;
 
         //Split into Terms Based on WhiteSpaces
-        let searchTerms = title.split(/\s+/); 
+        let searchTerms = title.split(/\s+/);
         let regexPatterns = searchTerms.map(term => new RegExp(term, 'i'));
 
         //Regex Search to Atleast find One Term
         let similarPosts = await Post.find({
             $or: regexPatterns.map(pattern => ({ title: { $regex: pattern } }))
         });
-        
+
         //Post Id -> Post with Raw Info -> Post With Right Info
         let postIds = similarPosts.map(post => post._id);
         let posts = await extractPostsFromList(postIds);
-        let modifiedPosts = await extractOwnerInfo(posts);
+        let filteredPosts = posts.filter(post => post.owner !== uid);
+        let modifiedPosts = await extractOwnerInfo(filteredPosts);
 
-        res.status(200).json({ posts : modifiedPosts });
+        res.status(200).json({ posts: modifiedPosts });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
@@ -80,12 +82,14 @@ export const randomPosts = async (req, res) => {
         let randomPosts = await Post.aggregate([
             { $sample: { size: 20 } }
         ]);
+        let uid = req.body.userId;
 
         let postIds = randomPosts.map(post => post._id);
         let posts = await extractPostsFromList(postIds);
-        let modifiedPosts = await extractOwnerInfo(posts);
+        let filteredPosts = posts.filter(post => post.owner !== uid);
+        let modifiedPosts = await extractOwnerInfo(filteredPosts);
 
-        res.status(200).json({ posts: modifiedPosts});
+        res.status(200).json({ posts: modifiedPosts });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
