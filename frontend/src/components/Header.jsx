@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/Header.css'
 import { NavLink, useLocation } from 'react-router-dom';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
-import { TextField } from '@mui/material'
+import { TextField, Avatar } from '@mui/material'
 import { HOMEHREF } from '../constants';
 
 const EmptyContainer = () => (
@@ -40,9 +40,7 @@ const Header = ({ onSearchSubmit }) => {
     return (
         <header className='header-style'>
             <div className="logo">
-                <NavLink to="/">
-                    <h3>Pixure</h3>
-                </NavLink>
+                <h3 onClick={() => { window.location.href = '/' }}>Pixure</h3>
             </div>
 
             {currentPath === HOMEHREF ? (
@@ -65,7 +63,8 @@ const Header = ({ onSearchSubmit }) => {
             ) : <EmptyContainer />}
 
             <NavLink to="/profile">
-                <PersonRoundedIcon className='profile-icon' style={{ fontSize: '2rem' }} />
+                {/* <PersonRoundedIcon className='profile-icon' style={{ fontSize: '2rem' }} /> */}
+                <Avatar alt="Profile Picture" src="https://i.pinimg.com/originals/b6/dd/1a/b6dd1a749156ff856db1296d0dbc56d4.png" className='profile-icon' style={{ width: '40px', height: '40px' }} />
             </NavLink>
         </header>
     );

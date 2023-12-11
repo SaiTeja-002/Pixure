@@ -249,9 +249,7 @@ const LoginPage = () => {
                         Login
                     </button>
 
-                    <NavLink to="/signup">
-                        <h4 fontSize="1.5rem">New user? Signup</h4>
-                    </NavLink>
+                    <h4 onClick={() => { window.location.href = '/signup' }} className='nav'>New user? Signup</h4>
                 </div>
             </div>
         </div>

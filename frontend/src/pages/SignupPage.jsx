@@ -83,9 +83,8 @@ const SignupPage = () => {
                         Signup
                     </button>
 
-                    <NavLink to="/login">
-                        <h4 fontSize="1.5rem">Already have an account? Login</h4>
-                    </NavLink>
+                    <h4 onClick={() => { window.location.href = '/login' }} className='nav'>Already have an account? Login</h4>
+
                 </div>
             </div>
         </div>

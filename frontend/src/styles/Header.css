@@ -16,6 +16,8 @@
 
 .logo {
     color: black;
+    cursor: pointer;
+    font-size: larger;
 }
 
 .logo h3 {
