@@ -1,6 +1,7 @@
 pipeline {
     environment {
-        registry = "SaiTeja-002/Pixure"
+        SERVER_IMAGE = 'laxmisreenivas/pixture-server'
+        CLIENT_IMAGE = 'laxmisreenivas/pixture-client'
         serverImage = ""
         clientImage = ""
     }
@@ -29,13 +30,13 @@ pipeline {
                 }
             }
         }
-        stage('Stage 3: DockerBuild'){
+        stage('Stage 3: DockerBuild') {
             steps {
                 dir('backend') {
-                    serverImage = docker.build registry + ":latest"
+                    serverImage = docker.build SERVER_IMAGE  + ":latest"
                 }
                 dir('frontend') {
-                    clientImage = docker.build registry + ":latest" 
+                    clientImage = docker.build CLIENT_IMAGE + ":latest"
                 }
             }
         }
