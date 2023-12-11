@@ -5,20 +5,35 @@
     color: white;
     padding: 10px;
     height: 75px;
+    border-bottom: 2px solid #ddd;
 }
 
 .profile-icon {
-    margin-left: auto; /* Pushes the profile icon to the right edge */
-    margin-right: 30px; /* Add some spacing to the right of the profile icon */
-    color: black; /* Set the color for the profile icon */
+    margin-left: auto;
+    margin-right: 30px;
+    color: black;
 }
 
 .logo {
     color: black;
 }
 
+.logo h3 {
+    margin-left: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+.logo h3:hover {
+    text-decoration: none;
+}
+
+.logo h3:visited {
+    color: black;
+}
+
 .search-bar {
-    flex: 1; /* Take up remaining space between logo and profile icon */
+    flex: 1;
     margin: -100px 100px;
-    padding: 0 0px; /* Adjust padding as needed for the search bar */
+    padding: 0 0px;
 }
