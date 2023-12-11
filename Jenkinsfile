@@ -30,7 +30,7 @@ pipeline {
                 }
             }
         }
-        stage('Stage 3: DockerBuild') {
+        stage('Stage 3: Docker Build') {
             steps {
                 dir('backend') {
                     script{
@@ -44,11 +44,13 @@ pipeline {
                 }
             }
         }
-        stage('Stage 4: DockerPush'){
-            script{
-                docker.withRegistry( '', 'DockerHubCred') {
-                    serverImage.push()
-                    clientImage.push()
+        stage('Stage 4: Docker Push'){
+            steps{
+                script{
+                    docker.withRegistry( '', 'DockerHubCred') {
+                        serverImage.push()
+                        clientImage.push()
+                    }
                 }
             }
         }
