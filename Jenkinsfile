@@ -2,8 +2,13 @@ pipeline {
     environment {
         SERVER_IMAGE = 'laxmisreenivas/pixture-server'
         CLIENT_IMAGE = 'laxmisreenivas/pixture-client'
+
         serverImage = ""
         clientImage = ""
+
+        PORT = 5000
+        DB_URL = credentials('Pixture DB URL')
+        SECRET_KEY = credentials('Pixture Secret Key')
     }
     agent any
     stages {
@@ -14,11 +19,6 @@ pipeline {
             }
         }
         stage('Stage 2: Testing') {
-            environment {
-                DB_URL = credentials('Pixture DB URL')
-                PORT = 5000
-                SECRET_KEY = credentials('Pixture Secret Key')
-            }
             steps {
                 dir('backend') {
                     sh 'npm install'
@@ -61,7 +61,12 @@ pipeline {
                 disableHostKeyChecking: true, 
                 installation: 'Ansible', 
                 inventory: 'inventory', 
-                playbook: 'playbook.yml'
+                playbook: 'playbook.yml'       
+                extraVars: [
+                    DB_URL="${DB_URL}",
+                    PORT="${PORT}",
+                    SECRET_KEY="${SECRET_KEY}"
+                ]
             }
         }
     }
