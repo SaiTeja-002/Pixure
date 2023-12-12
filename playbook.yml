@@ -1,22 +1,17 @@
 ---
-- name: Deploy and Run Docker Containers
-  hosts: localhost  
+- name: Deploying docker images
+  hosts: localhost
+
   tasks:
-    - name: Pull Server image
-      shell: docker pull laxmisreenivas/pixture-server:latest
+    - name: Copy Docker Compose file from host machine to remote host
+      copy:
+        src: docker-compose.yml
+        dest: ./
 
-    - name: Start docker service
-      service:
-        name: docker
-        state: started
-        ports:
-          - "5000:5000"
-        env:
-          - DB_URL= {{DB_URL}}
-          - PORT= {{PORT}}
-          - SECRET_KEY= {{SECRET_KEY}}
+    - name: Pull docker image which is specified in docker compose
+      shell:
+        cmd: docker-compose pull
+        chdir: ./
 
-    - name: Running container
-      shell: docker run -d -p 5000:5000 laxmisreenivas/pixture-server:latest
-
-   
+    - name: Running the docker images
+      command: docker-compose up -d --build
