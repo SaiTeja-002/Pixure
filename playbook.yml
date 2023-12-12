@@ -4,6 +4,7 @@
   tasks:
     - name: Pull Server image
       shell: docker pull laxmisreenivas/pixture-server:latest
+      
     - name: Start docker service
       service:
         name: docker
