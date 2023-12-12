@@ -15,9 +15,9 @@ pipeline {
         }
         stage('Stage 2: Testing') {
             environment {
-                DB_URL = "mongodb+srv://LaxmiGenius:HdvoWTWpZ6QaKewh@cluster0.zehgzrl.mongodb.net/?retryWrites=true&w=majority"
+                DB_URL = credentials('Pixture DB URL')
                 PORT = 5000
-                SECRET_KEY = "shhh..."
+                SECRET_KEY = credentials('Pixture Secret Key')
             }
             steps {
                 dir('backend') {
