@@ -63,9 +63,9 @@ pipeline {
                 inventory: 'inventory', 
                 playbook: 'playbook.yml',     
                 extraVars: [
-                    DB_URL="${DB_URL}",
-                    PORT="${PORT}",
-                    SECRET_KEY="${SECRET_KEY}"
+                    DB_URL='${DB_URL}',
+                    PORT='${PORT}',
+                    SECRET_KEY='${SECRET_KEY}'
                 ]
             }
         }
