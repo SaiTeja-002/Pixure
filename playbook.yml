@@ -2,9 +2,9 @@
 - name: Deploying docker images
   hosts: localhost
   vars:
-    DB_URL: {{DB_URL}}
-    PORT: {{PORT}}
-    SECRET_KEY: {{SECRET_KEY}}
+    DB_URL: "{{DB_URL}}"
+    PORT: "{{PORT}}"
+    SECRET_KEY: "{{SECRET_KEY}}"
 
   tasks:
     - name: Copy Docker Compose file from host machine to remote host
