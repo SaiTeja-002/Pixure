@@ -9,6 +9,6 @@ services:
     ports:
       - '5000:5000'
     environment:
-      - MONGO_DB=mongodb+srv://LaxmiGenius:HdvoWTWpZ6QaKewh@cluster0.zehgzrl.mongodb.net/?retryWrites=true&w=majority
+      - MONGO_DB="mongodb+srv://LaxmiGenius:HdvoWTWpZ6QaKewh@cluster0.zehgzrl.mongodb.net/?retryWrites=true&w=majority"
       - PORT=5000
       - SECRET_KEY="shhh..."
