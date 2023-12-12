@@ -61,7 +61,7 @@ pipeline {
                 disableHostKeyChecking: true, 
                 installation: 'Ansible', 
                 inventory: 'inventory', 
-                playbook: 'playbook.yml'       
+                playbook: 'playbook.yml',     
                 extraVars: [
                     DB_URL="${DB_URL}",
                     PORT="${PORT}",
