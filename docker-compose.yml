@@ -9,6 +9,6 @@ services:
     ports:
       - '5000:5000'
     environment:
-      - DB_URL=mongodb+srv://LaxmiGenius:HdvoWTWpZ6QaKewh@cluster0.zehgzrl.mongodb.net/?retryWrites=true&w=majority
-      - PORT=5000
-      - SECRET_KEY="shhh..."
+      - DB_URL={{DB_URL}}
+      - PORT={{PORT}}
+      - SECRET_KEY={{SECRET_KEY}}
