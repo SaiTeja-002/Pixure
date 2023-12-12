@@ -1,7 +1,7 @@
 version: '3.5'
 services:
   frontend:
-    image: laxmisreenivas/pixture-server:latest
+    image: laxmisreenivas/pixture-client:latest
     ports:
       - '3000:3000'
   backend:
@@ -9,6 +9,6 @@ services:
     ports:
       - '5000:5000'
     environment:
-      - MONGO_DB= mongodb+srv://LaxmiGenius:HdvoWTWpZ6QaKewh@cluster0.zehgzrl.mongodb.net/?retryWrites=true&w=majority
-      - PORT = 5000
-      - SECRET_KEY = "shhh..."
+      - MONGO_DB=mongodb+srv://LaxmiGenius:HdvoWTWpZ6QaKewh@cluster0.zehgzrl.mongodb.net/?retryWrites=true&w=majority
+      - PORT=5000
+      - SECRET_KEY="shhh..."
