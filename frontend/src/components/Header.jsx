@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/Header.css'
 import { NavLink, useLocation } from 'react-router-dom';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import { TextField, Avatar } from '@mui/material'
 import { HOMEHREF } from '../constants';
+import { useDispatch, useSelector } from 'react-redux';
+import * as userActions from '../actions/userAction';
 
 const EmptyContainer = () => (
     <div className="empty-container" style={{ width: '100%', height: '56px' }} />
@@ -13,6 +15,13 @@ const Header = ({ onSearchSubmit }) => {
     const location = useLocation();
     const currentPath = location.pathname;
     const [searchText, setSearchText] = useState('');
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(userActions.fetchInfo());
+    }, [dispatch])
+
+    let user = useSelector((state) => state.user);
 
     //Search Title or Person
     const handleKeyPress = (event) => {
@@ -63,8 +72,12 @@ const Header = ({ onSearchSubmit }) => {
             ) : <EmptyContainer />}
 
             <NavLink to="/profile">
-                {/* <PersonRoundedIcon className='profile-icon' style={{ fontSize: '2rem' }} /> */}
-                <Avatar alt="Profile Picture" src="https://i.pinimg.com/originals/b6/dd/1a/b6dd1a749156ff856db1296d0dbc56d4.png" className='profile-icon' style={{ width: '40px', height: '40px' }} />
+                {user.photo !== '' ? (
+                    <Avatar alt="Profile Picture" src={user.photo} className='profile-icon' style={{ width: '40px', height: '40px' }} />
+                ) : (
+                    <PersonRoundedIcon className='profile-icon' style={{ fontSize: '2rem' }} />
+                )}
+
             </NavLink>
         </header>
     );
