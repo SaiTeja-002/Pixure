@@ -16,6 +16,6 @@
     - name: Running the docker images
       command: docker-compose up -d --build
       environment:
-        DB_URL: {{DB_URL}}
-        PORT: {{PORT}}
-        SECRET_KEY: {{SECRET_KEY}} 
+        DB_URL: "{{DB_URL}}"
+        PORT: "{{PORT}}"
+        SECRET_KEY: "{{SECRET_KEY}}"  
