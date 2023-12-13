@@ -1,7 +1,7 @@
 import React from 'react';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { ImCross } from "react-icons/im";
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as userActions from '../actions/userAction';
 
 function UserCard({ user, showDeleteButton }) {
@@ -57,7 +57,7 @@ function UserCard({ user, showDeleteButton }) {
             </div>
             {showDeleteButton && (
                 <div style={deleteButtonStyle}>
-                    <ImCross onClick=  {() => dispatch(userActions.unfollowUser(user.name))}/>
+                    <ImCross onClick={() => dispatch(userActions.unfollowUser(user.name))} data-testid="delete-button"/>
                 </div>
             )}
         </div>
