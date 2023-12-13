@@ -8,7 +8,7 @@ import dotenv from "dotenv" //Environment Variables
 import authRoute from "./routes/auth.js";
 import userRoute from "./routes/user.js";
 import postRoute from "./routes/post.js";
-import tagRoute  from "./routes/tag.js";
+import tagRoute from "./routes/tag.js";
 
 dotenv.config()
 const app = express();
@@ -20,11 +20,24 @@ app.use(cors());
 app.use('/auth', authRoute);
 app.use('/user', userRoute);
 app.use('/post', postRoute);
-app.use('/tag' , tagRoute );
+app.use('/tag', tagRoute);
 
+const server = app.listen(process.env.PORT, () => {
+    console.log(`Server running on port ${process.env.PORT}`);
+});
 
 mongoose.connect(process.env.DB_URL)
-    .then(() => app.listen(process.env.PORT, () => console.log(`Server Running on Port: ${process.env.PORT}`)))
+    .then(() => console.log('Connected To MongoDb'))
     .catch((error) => console.log(`MongoDb Connection Error : ${error}`));
 
-export default app;
+const close = async () => {
+    try {
+        server.close();
+        await mongoose.connection.close();
+        console.log('Server Closed');
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+export { app, close };
