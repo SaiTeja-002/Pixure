@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./ 
 
-RUN npm install registry.npmjs.org
+RUN npm install
 
 COPY . .
 
