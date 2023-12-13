@@ -25,6 +25,7 @@ export const createPost = async (req, res, next) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
+        logger.error(`Create Post Error (At Post) : ${error}`);
     }
 };
 
@@ -51,6 +52,7 @@ export const extractPostsFromList = async (postIds) => {
 //Search By Title Feature
 export const searchByTitle = async (req, res, next) => {
     try {
+        const startTime = console.time('Title Search');
         let title = req.params.title;
         let uid = req.body.userId;
 
@@ -69,10 +71,15 @@ export const searchByTitle = async (req, res, next) => {
         let filteredPosts = posts.filter(post => post.owner !== uid);
         let modifiedPosts = await extractOwnerInfo(filteredPosts);
 
+        const endTime = console.timeEnd('Title Search');
+        const processingTime = endTime - startTime;
+        logger.info(`Search By Title Time :${processingTime}`);
+
         res.status(200).json({ posts: modifiedPosts });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
+        logger.error(`Title Search Error : ${error}`);
     }
 };
 
@@ -93,6 +100,7 @@ export const randomPosts = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
+        logger.error(`Fetch Feed Error : ${error}`);
     }
 };
 
@@ -112,6 +120,7 @@ export const editTitle = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
+        logger.error(`Edit Title Error : ${error}`);
     }
 };
 
@@ -138,6 +147,7 @@ export const removePost = async (req, res, next) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
+        logger.error(`Remove Post (At Post) : ${error}`);
     }
 };
 

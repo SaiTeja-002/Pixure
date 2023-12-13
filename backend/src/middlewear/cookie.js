@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import dotenv from "dotenv";
+import {logger} from '../utils/logger.js';
 
 dotenv.config();
 
@@ -19,5 +20,6 @@ export const validCookie = async (req, res, next) => {
     } catch (error) {
       console.error('Authentication error:', error.message);
       res.status(401).json({ error: 'Authentication failed' });
+      logger.error(`Authentication Error : ${error}`);
     }
   };

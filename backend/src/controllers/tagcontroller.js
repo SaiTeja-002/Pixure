@@ -1,6 +1,7 @@
 import Hashtag from '../models/hashtags.js';
 import { extractPostsFromList } from './postcontroller.js';
 import { extractOwnerInfo } from './usercontroller.js';
+import { logger } from '../utils/logger.js';
 
 //Storing Post References Based On Tags for better Search
 export const tagPost = async (req, res) => {
@@ -14,12 +15,14 @@ export const tagPost = async (req, res) => {
             if (existingHashtag) {
                 existingHashtag.images.push(postId);
                 await existingHashtag.save();
+                logger.info(`Post Added to : ${tag}`);
             } else {
                 const newHashtag = new Hashtag({
                     name: tag,
                     images: [postId],
                 });
                 await newHashtag.save();
+                logger.info(`New Hashtag Added : ${tag}`);
             }
         }
 
@@ -27,12 +30,14 @@ export const tagPost = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
+        logger.error(`Tag Post Error : ${error}`);
     }
 };
 
 //Returns Results of Hastags
 export const searchHashtagsByName = async (req, res) => {
     try {
+        const startTime = console.time('HashTag Search');
         let tag = req.query.tag;
         let uid = req.body.userId;
 
@@ -51,10 +56,16 @@ export const searchHashtagsByName = async (req, res) => {
         let filteredPosts = posts.filter(post => post.owner !== uid);
         let modifiedPosts = await extractOwnerInfo(filteredPosts);
 
+        const endTime = console.timeEnd('HashTag Search');
+        const processingTime = endTime - startTime;
+        logger.info(`HashTag Search :${processingTime}`);
+
+        logger.info(`HashTag Search : ${tag}`);
         res.status(200).json({ posts: modifiedPosts });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
+        logger.error(`Hashtag Search Error : ${error}`);
     }
 };
 
@@ -78,6 +89,7 @@ export const removePostReferences = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
+        logger.error(`Remove Post Error (At Tag) : ${error}`);
     }
 };
 
