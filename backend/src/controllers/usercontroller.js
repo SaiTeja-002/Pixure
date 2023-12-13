@@ -10,7 +10,7 @@ export const signUp = async (req, res) => {
         var password = req.body.password;
         var email = req.body.email;
 
-        let existingUser = await User.findOne({ email: email, name: name });
+        let existingUser = await User.findOne({ mail: email, name: name });
 
         if (existingUser) { // 400 - Bad Rquest
             return res.status(400).json({ message: 'User already exists' });
