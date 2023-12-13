@@ -3,6 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { TextField } from '@mui/material'
 import '../styles/Login.css'
 import * as authActions from '../actions/authAction.js';
+import logo from '../images/logo1.png';
 
 const SignupPage = () => {
     const [email, setEmail] = useState('');
@@ -21,7 +22,7 @@ const SignupPage = () => {
         <div>
             <div className="split left">
                 <div className="centered">
-                    <img src={require('../images/logo1.png')} />
+                <img src={logo} />
                 </div>
             </div>
             <div className="split right">
