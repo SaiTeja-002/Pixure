@@ -31,12 +31,12 @@ export const signUp = async (req, res) => {
 
         //Cookie Generation
         let token = jwt.sign({ id: newUser._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
-        logger.info(`New User Sign up: ${name}`);
+        logger.info({message : `Sign up`});
 
         res.status(201).json({ cookie: token }); //201 - Successful Creation
     } catch (error) {  //Unexpected Failure
         res.status(500).json({ message: 'Something went wrong' });
-        logger.error(`Sign up Error : ${error}`);
+        logger.error({message : `Sign up`,type : `${error}`});
     }
 }
 
@@ -62,12 +62,12 @@ export const login = async (req, res) => {
 
         // Generate a token for the authenticated user
         let token = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
-        logger.info(`Login : ${name}`);
+        logger.info({message : "Login"});
 
         res.status(200).json({ cookie: token }); // 200 - OK
     } catch (error) {  // Unexpected Failure
         res.status(500).json({ message: 'Something went wrong' });
-        logger.error(`Login Error : ${error}`);
+        logger.error({message : `Login`,type : `${error}`});
     }
 }
 
@@ -91,7 +91,7 @@ export const getInfo = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
-        logger.error(`Profile Fetch Error : ${error}`);
+        logger.error({message : `Info Fetch`,type : `${error}`});
     }
 };
 
@@ -120,7 +120,7 @@ const extractInfoFromList = async (userIds) => {
 // Returns a followers & following list
 export const getSocialList = async (req, res) => {
     try {
-        const startTime = console.time('Profile Fetch');
+        const startTime = Date.now();
         var userId = req.body.userId;
 
         let user = await User.findById(userId);
@@ -134,10 +134,10 @@ export const getSocialList = async (req, res) => {
         const followersInfo = await extractInfoFromList(user.followers);
         const followingInfo = await extractInfoFromList(user.following);
 
-        const endTime = console.timeEnd('Profile Fetch');
+        const endTime = Date.now();
         const processingTime = endTime - startTime;
 
-        logger.info(`Profile Fetch Time: ${processingTime} ms`);
+        logger.info({message : "Social Fetch",time : processingTime});
 
         res.status(200).json({
             followers: followersInfo,
@@ -146,14 +146,14 @@ export const getSocialList = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
-        logger.error(`Social Fetch Error : ${error}`);
+        logger.error({message : `Social Fetch`,type : `${error}`});
     }
 };
 
 //Returners Posts
 export const getPosts = async (req, res) => {
     try {
-        let startTime = console.time('Fetch Posts');
+        let startTime = Date.now();
 
         let userId = req.body.userId;
         let user = await User.findById(userId);
@@ -167,16 +167,16 @@ export const getPosts = async (req, res) => {
         //Removing Owner field - Already Known
         posts = posts.map(post => ({ title: post.title, image: post.image }));
         
-        let endTime = console.timeEnd('Fetch Posts');
+        let endTime = Date.now();
         const processingTime = endTime - startTime;
-        logger.info(`Post Fetch Time: ${processingTime} ms`);
+        logger.info({message : "Post Fetch",time : processingTime});
 
         res.status(200).json({ posts: posts });
 
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Something went wrong" });
-        logger.error(`Post Fetch Error : ${error}`);
+        logger.error({message : `Post Fetch`,type : `${error}`});
     }
 }
 
@@ -217,7 +217,7 @@ export const updateInfo = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
-        logger.error(`Update Info Error : ${error}`);
+        logger.error({message : `Update Info`,type : `${error}`});
     }
 };
 
@@ -248,7 +248,7 @@ export const followUser = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
-        logger.error(`Follow User Error : ${error}`);
+        logger.error({message : `Follow User`,type : `${error}`});
     }
 };
 
@@ -278,7 +278,7 @@ export const unfollowUser = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
-        logger.error(`Unfollow User Error : ${error}`);
+        logger.error({message : `Unfollow User`,type : `${error}`});
     }
 };
 
@@ -301,7 +301,7 @@ export const addPost = async (req, res, next) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
-        logger.error(`Add Post Error (At User) : ${error}`);
+        logger.error({message : `Add Post`,type : `${error}`,db : "User"});
     }
 };
 
@@ -320,7 +320,7 @@ export const extractOwnerInfo = async (posts) => {
 //Profile Info Of Queried User
 export const profileInfo = async (req, res) => {
     try {
-        let startTime = console.time('Profile Info Fetch')
+        let startTime = Date.now();
         let userName = req.params.name;
         let loggedInUserId = req.body.userId;
 
@@ -346,15 +346,15 @@ export const profileInfo = async (req, res) => {
         let modifiedPosts = posts.map(({ owner, ...rest }) => rest);
         profileInfo.posts = modifiedPosts;
 
-        let endTime = console.timeEnd('Profile Info Fetch');
+        let endTime = Date.now();
         const processingTime = endTime - startTime;
-        logger.info(`Profile Fetch Time: ${processingTime} ms`);
+        logger.info({message : "Profile Info",time : processingTime});
 
         res.status(200).json(profileInfo);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
-        logger.error(`Profile Fetch Error : ${error}`);
+        logger.error({message : `Profile Fetch`,type : `${error}`});
     }
 };
 
@@ -386,7 +386,7 @@ export const editPost = async (req, res, next) => {
     catch {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
-        logger.error(`Edit Post Error (At User) : ${error}`);
+        logger.error({message : `Edit Post`,type : `${error}`,db : "User"});
     }
 }
 
@@ -418,6 +418,6 @@ export const deletePost = async (req, res, next) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
-        logger.error(`Delete Post Error (At User): ${error}`);
+        logger.error({message : `Delete Post`,type : `${error}`,db : "User"});
     }
 };

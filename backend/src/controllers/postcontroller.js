@@ -1,5 +1,6 @@
 import Post from '../models/posts.js';
 import { extractOwnerInfo } from './usercontroller.js';
+import { logger } from '../utils/logger.js';
 
 //Adds post to DB
 export const createPost = async (req, res, next) => {
@@ -25,7 +26,7 @@ export const createPost = async (req, res, next) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
-        logger.error(`Create Post Error (At Post) : ${error}`);
+        logger.error({ message: `Add Post`, type: `${error}`, db: "Post" });
     }
 };
 
@@ -52,7 +53,7 @@ export const extractPostsFromList = async (postIds) => {
 //Search By Title Feature
 export const searchByTitle = async (req, res, next) => {
     try {
-        const startTime = console.time('Title Search');
+        const startTime = Date.now();
         let title = req.params.title;
         let uid = req.body.userId;
 
@@ -71,15 +72,15 @@ export const searchByTitle = async (req, res, next) => {
         let filteredPosts = posts.filter(post => post.owner !== uid);
         let modifiedPosts = await extractOwnerInfo(filteredPosts);
 
-        const endTime = console.timeEnd('Title Search');
+        const endTime = Date.now();
         const processingTime = endTime - startTime;
-        logger.info(`Search By Title Time :${processingTime}`);
+        logger.info({message : "Title Search",type : title,time : processingTime});
 
         res.status(200).json({ posts: modifiedPosts });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
-        logger.error(`Title Search Error : ${error}`);
+        logger.error({ message: `Title Search`, type: `${error}` });
     }
 };
 
@@ -100,7 +101,7 @@ export const randomPosts = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
-        logger.error(`Fetch Feed Error : ${error}`);
+        logger.error({ message: `Feed Fetch`, type: `${error}` });
     }
 };
 
@@ -113,14 +114,14 @@ export const editTitle = async (req, res) => {
         const updatedPost = await Post.findByIdAndUpdate(postIdToUpdate, { title: newTitle });
 
         if (updatedPost) {
-            return res.status(200).json({ message: 'Post title updated successfully'});
+            return res.status(200).json({ message: 'Post title updated successfully' });
         } else {
             return res.status(404).json({ message: 'Post not found' });
         }
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
-        logger.error(`Edit Title Error : ${error}`);
+        logger.error({ message: `Edit Post`, type: `${error}`, db : "Post" });
     }
 };
 
@@ -147,11 +148,6 @@ export const removePost = async (req, res, next) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Something went wrong' });
-        logger.error(`Remove Post (At Post) : ${error}`);
+        logger.error({ message: `Delete Post`, type: `${error}`, db : "Post" });
     }
 };
-
-
-
-
-
