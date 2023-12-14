@@ -1,5 +1,6 @@
 import React from 'react';
 import { ImCross } from "react-icons/im";
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import { useDispatch } from 'react-redux';
 import * as userActions from '../actions/userAction';
 import { userTileStyle, avatarStyle, userDetailsStyle, userBioStyle, deleteButtonStyle } from '../styles/UserCardStyles';
@@ -13,7 +14,10 @@ function UserCard({ user, showDeleteButton }) {
     return (
         <div style={userTileStyle}>
             <div style={avatarStyle}>
-                <img src={user.photo} alt="User Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
+                {user.photo !== ''
+                    ? (<img src={user.photo} alt="User Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%' }} />)
+                    : (<PersonRoundedIcon style={{ width: '100%', height: '100%', borderRadius: '50%' }}/>)
+                }
             </div>
             <div style={userDetailsStyle}>
                 <h3>{user.name}</h3>

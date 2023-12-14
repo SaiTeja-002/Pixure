@@ -16,7 +16,7 @@ const TagBar = ({ onTagChange, searchActive}) => {
     };
 
     const hashtags = [
-        'Travel', 'Food', 'Nature', 'Photography', 'Fitness',
+        'Travel', 'Food', 'Nature', 'Photography', 'Fitness', 'Anime',
         'Art', 'Fashion', 'Technology', 'Music', 'Sports',
         'Adventure', 'Health', 'Science', 'Books', 'Gaming', 'Mindfulness', 'Creativity'
     ];

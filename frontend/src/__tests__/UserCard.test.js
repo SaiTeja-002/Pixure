@@ -14,12 +14,18 @@ describe('UserCard Component', () => {
     const mockUser = {
         name: 'Test User',
         photo: 'test.jpg',
+        bio: 'Test Bio'
     };
 
-    it('renders UserCard name correctly', () => {
+    it('renders UserCard details correctly', () => {
         const { getByText } = render(<UserCard user={mockUser} />);
         const userNameElement = getByText('Test User');
+        // const userPhotoElement = getByText('test.jpg');
+        const userBioElement = getByText('Test Bio');
+        
         expect(userNameElement).toBeInTheDocument();
+        // expect(userPhotoElement).toBeInTheDocument();
+        expect(userBioElement).toBeInTheDocument();
     });
 
     it('displays UserCard delete button when showDeleteButton is true', () => {

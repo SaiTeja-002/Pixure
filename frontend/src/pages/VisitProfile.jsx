@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PostLayout from '../components/PostLayout';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import '../styles/VisitProfile.css'
 import { useDispatch, useSelector } from 'react-redux';
 import * as userActions from '../actions/userAction.js';
@@ -32,11 +33,11 @@ const VisitProfile = ({ name }) => {
     return (
         <div style={{ height: "100vh", padding: "15px" }}>
             <div className="profile-container">
-                {/* <div>hello</div> */}
                 <div className="left-column">
-                    {/* <div>hello left-column</div> */}
                     <div className="profile-info">
-                        <img src={profile.photo} alt="Profile Picture" className="profile-image" />
+                        {profile.photo !== ''
+                            ? (<img src={profile.photo} alt="Profile Picture" className="profile-image" />)
+                            : (<PersonRoundedIcon className='profile-image' style={{ fontSize: '2rem' }} />)}
                         <h2>{profile.name}</h2>
                         <h3>{profile.bio}</h3>
                     </div>
@@ -66,7 +67,7 @@ const VisitProfile = ({ name }) => {
                 </div>
             </div>
 
-            <PostLayout data-testid="post-layout" feed={posts}/>
+            <PostLayout data-testid="post-layout" feed={posts} />
 
         </div>
     );
