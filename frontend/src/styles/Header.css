@@ -8,10 +8,18 @@
     border-bottom: 2px solid #ddd;
 }
 
+.profile-header {
+    height: 45px;
+    border-bottom-width: 1px;
+    /* Adjust the size of the border for profile header */
+}
+
 .profile-icon {
     margin-left: auto;
-    margin-right: 30px;
+    margin-right: 50px;
     color: black;
+    width: 40px;
+    height: 40px;
 }
 
 .logo {
@@ -38,4 +46,11 @@
     flex: 1;
     margin: -100px 100px;
     padding: 0 0px;
+}
+
+.logout {
+    margin-right: 30px;
+    font-size: 2rem;
+    color: #000;
+    cursor: pointer;
 }

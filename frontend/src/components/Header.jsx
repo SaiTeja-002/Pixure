@@ -3,12 +3,13 @@ import '../styles/Header.css'
 import { NavLink, useLocation } from 'react-router-dom';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import { TextField, Avatar } from '@mui/material'
-import { HOMEHREF } from '../constants';
+import { HOMEHREF, PROFILEHREF } from '../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import * as userActions from '../actions/userAction';
+import { FiLogOut } from "react-icons/fi";
 
 const EmptyContainer = () => (
-    <div className="empty-container" style={{ width: '100%', height: '56px' }} />
+    <div className="empty-container" style={{ width: '100%', height: '20px' }} />
 );
 
 const Header = ({ onSearchSubmit }) => {
@@ -46,8 +47,17 @@ const Header = ({ onSearchSubmit }) => {
         }
     };
 
+    // logout
+    const handleLogout = () => {
+        // sessionStorage.removeItem('cookie');
+        sessionStorage.clear();
+        localStorage.clear();
+        console.log(sessionStorage);
+        window.location.href = HOMEHREF;
+    }
+
     return (
-        <header className='header-style'>
+        <header className={`header-style ${currentPath === PROFILEHREF ? 'profile-header' : ''}`}>
             <div className="logo">
                 <h3 onClick={() => { window.location.href = '/' }}>Pixure</h3>
             </div>
@@ -73,12 +83,14 @@ const Header = ({ onSearchSubmit }) => {
 
             <NavLink to="/profile">
                 {user.photo !== '' ? (
-                    <Avatar alt="Profile Picture" src={user.photo} className='profile-icon' style={{ width: '40px', height: '40px' }} />
+                    <Avatar alt="Profile Picture" src={user.photo} className='profile-icon' />
                 ) : (
                     <PersonRoundedIcon className='profile-icon' style={{ fontSize: '2rem' }} />
                 )}
-
             </NavLink>
+
+            <FiLogOut className='logout' onClick={handleLogout} />
+
         </header>
     );
 };

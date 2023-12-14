@@ -5,6 +5,7 @@ export const COOKIE = "cookie";
 //Routing Related
 export const HOMEHREF = '/';
 export const LOGINHREF = '/login';
+export const PROFILEHREF = '/profile';
 
 //Redux Related
 export const UPDATE_METADATA = "UPDATE_METADATA";

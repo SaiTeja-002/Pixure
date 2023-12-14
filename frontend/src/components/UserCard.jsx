@@ -1,5 +1,4 @@
-import React from 'react';
-import { RiDeleteBinLine } from 'react-icons/ri';
+import React, { useRef, useState, useEffect } from 'react';
 import { ImCross } from "react-icons/im";
 import { useDispatch } from 'react-redux';
 import * as userActions from '../actions/userAction';
@@ -29,6 +28,12 @@ function UserCard({ user, showDeleteButton }) {
         margin: '0',
     };
 
+    const userBioStyle = {
+        marginLeft: '20px',
+        marginRight: '30px',
+        fontStyle: 'italic'
+    }
+
     const deleteButtonStyle = {
         display: 'flex',
         alignItems: 'center',
@@ -46,6 +51,36 @@ function UserCard({ user, showDeleteButton }) {
     };
 
     const dispatch = useDispatch();
+    const bioLength = 60;
+
+    // const userTileRef = useRef(null);
+    // const [bioLength, setBioLength] = useState(20); // Default bio length
+
+    // useEffect(() => {
+    //     function handleResize() {
+    //         if (userTileRef.current) {
+    //             const tileWidth = userTileRef.current.offsetWidth;
+    //             if (tileWidth < 300) {
+    //                 setBioLength(10);
+    //             } else if (tileWidth < 400) {
+    //                 setBioLength(15);
+    //             } else {
+    //                 setBioLength(20);
+    //             }
+    //         }
+    //     }
+
+    //     window.addEventListener('resize', handleResize);
+
+    //     // Initial calculation on component mount
+    //     handleResize();
+
+    //     return () => {
+    //         window.removeEventListener('resize', handleResize);
+    //     };
+    // }, [userTileRef]);
+
+    const truncatedBio = user.bio.length > bioLength ? user.bio.slice(0, bioLength) + '...' : user.bio;
 
     return (
         <div style={userTileStyle}>
@@ -55,9 +90,12 @@ function UserCard({ user, showDeleteButton }) {
             <div style={userDetailsStyle}>
                 <h3>{user.name}</h3>
             </div>
+            <div style={userBioStyle}>
+                {truncatedBio}
+            </div>
             {showDeleteButton && (
                 <div style={deleteButtonStyle}>
-                    <ImCross onClick={() => dispatch(userActions.unfollowUser(user.name))} data-testid="delete-button"/>
+                    <ImCross onClick={() => dispatch(userActions.unfollowUser(user.name))} data-testid="delete-button" />
                 </div>
             )}
         </div>
