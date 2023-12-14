@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { TextField } from '@mui/material'
 import '../styles/Login.css'
 import * as authActions from '../actions/authAction.js';
-import logo from '../images/logo1.png';
+import logo from '../images/logo3_nobg.png';
 
 const SignupPage = () => {
     const [email, setEmail] = useState('');

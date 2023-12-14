@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField } from '@mui/material';
 import '../styles/Login.css'
 import * as authActions from '../actions/authAction.js';
-import logo from '../images/logo1.png';
+import logo from '../images/logo3_nobg.png';
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
@@ -23,7 +23,7 @@ const LoginPage = () => {
         <div>
             <div className="split left">
                 <div className="centered">
-                    <img src={logo} />
+                    <img src={logo}/>
                 </div>
             </div>
             <div className="split right">
