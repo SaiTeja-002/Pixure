@@ -5,6 +5,7 @@ import { render, fireEvent } from '@testing-library/react';
 import UserCard from '../components/UserCard';
 import { useDispatch } from 'react-redux';
 import * as userActions from '../actions/userAction';
+import { BrowserRouter } from 'react-router-dom';
 
 jest.mock('react-redux', () => ({
     useDispatch: jest.fn(),
@@ -18,7 +19,7 @@ describe('UserCard Component', () => {
     };
 
     it('renders UserCard details correctly', () => {
-        const { getByText } = render(<UserCard user={mockUser} />);
+        const { getByText } = render(<BrowserRouter><UserCard user={mockUser} /></BrowserRouter>);
         const userNameElement = getByText('Test User');
         // const userPhotoElement = getByText('test.jpg');
         const userBioElement = getByText('Test Bio');
@@ -29,13 +30,13 @@ describe('UserCard Component', () => {
     });
 
     it('displays UserCard delete button when showDeleteButton is true', () => {
-        const { queryByTestId } = render(<UserCard user={mockUser} showDeleteButton={true} />);
+        const { queryByTestId } = render(<BrowserRouter><UserCard user={mockUser} showDeleteButton={true} /></BrowserRouter>);
         const deleteButton = queryByTestId('delete-button');
         expect(deleteButton).toBeInTheDocument();
     });
 
     it('does not display UserCard delete button when showDeleteButton is false', () => {
-        const { queryByTestId } = render(<UserCard user={mockUser} showDeleteButton={false} />);
+        const { queryByTestId } = render(<BrowserRouter><UserCard user={mockUser} showDeleteButton={false} /></BrowserRouter>);
         const deleteButton = queryByTestId('delete-button');
         expect(deleteButton).not.toBeInTheDocument();
     });
@@ -72,7 +73,7 @@ describe('UserCard Component', () => {
         const mockedDispatch = jest.fn();
         useDispatch.mockReturnValue(mockedDispatch);
 
-        const { getByTestId } = render(<UserCard user={mockUser} showDeleteButton={true} />);
+        const { getByTestId } = render(<BrowserRouter><UserCard user={mockUser} showDeleteButton={true} /></BrowserRouter>);
         const deleteButton = getByTestId('delete-button');
 
         expect(mockedDispatch).toHaveBeenCalledTimes(0);
