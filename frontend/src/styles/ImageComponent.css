@@ -160,3 +160,8 @@
 .edit-details button:last-child {
     margin-right: 0;
 }
+
+.default-user-icon {
+    color: #fff;
+    margin-right: 10px;
+}

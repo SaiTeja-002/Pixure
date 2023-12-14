@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FiDownload, FiEdit3, FiTrash2 } from 'react-icons/fi';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import '../styles/ImageComponent.css';
 import EditPopup from './EditPopUp';
 import { useDispatch, useSelector } from 'react-redux';
@@ -58,7 +59,10 @@ const ImageComponent = ({ src, title, showUser, setShowUser, avatarUrl, username
 
       {showUser && hovered && (
         <div className="user-details">
-          <img src={avatarUrl} alt="Avatar" />
+          {avatarUrl !== ''
+            ? (<img src={avatarUrl} alt="Avatar" />)
+            : (<PersonRoundedIcon className='default-user-icon'/>)
+          }
           <span>{username}</span>
         </div>
       )}
