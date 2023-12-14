@@ -12,14 +12,18 @@ const EmptyContainer = () => (
     <div className="empty-container" style={{ width: '100%', height: '20px' }} />
 );
 
-const Header = ({ onSearchSubmit }) => {
+const Header = ({ onSearchSubmit, searchBarText }) => {
     const location = useLocation();
     const currentPath = location.pathname;
-    const [searchText, setSearchText] = useState('');
+    const [searchText, setSearchText] = useState(searchBarText ? ('@' + searchBarText) : '');
 
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(userActions.fetchInfo());
+
+        if(searchBarText && onSearchSubmit){
+            onSearchSubmit('person',searchText);
+        }
     }, [dispatch])
 
     let user = useSelector((state) => state.user);

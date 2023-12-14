@@ -1,4 +1,4 @@
-import React, { useEffect,useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import TagBar from '../components/TagBar.jsx';
 import Header from '../components/Header.jsx';
 import '../styles/Home.css';
@@ -8,37 +8,52 @@ import * as tagsActions from '../actions/tagsAction.js';
 import { useDispatch, useSelector } from 'react-redux';
 import PostLayout from '../components/PostLayout.jsx';
 import VisitProfile from './VisitProfile.jsx';
+import { useLocation } from 'react-router-dom';
 
 const HomePage = () => {
     const searchActive = useRef(false);
-    const [profileName,setProfilName]  = useState(null); 
+    const [profileName, setProfilName] = useState(null);
+
+    let name;
+    const location = useLocation();
+    if (location.state) {
+        name = location.state.name;
+        window.history.replaceState({}, document.title);
+    }
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(postActions.getFeed())
+        if (name) {
+            setProfilName(name);
+        }
+        else {
+            dispatch(postActions.getFeed());
+        }
     }, [dispatch]);
 
     //Handles Feed When A Hastag is Selected
     const handleTagChange = (selectedTag) => {
         if (selectedTag != null) {
             dispatch(tagsActions.searchByTag(selectedTag));
+            console.log('tag clicked');
         }
         else {
             dispatch(postActions.getFeed());
+            console.log('random feed')
         }
     };
 
     //Handles Feed When A Search is Selected
-    const handleSearchChange = (type,data) => {
-        if(type == "person" && data != ""){
+    const handleSearchChange = (type, data) => {
+        if (type == "person" && data != "") {
             setProfilName(data);
             searchActive.current = true;
         }
-        else if (type == "title" && data != ""){
+        else if (type == "title" && data != "") {
             dispatch(postActions.searchPost(data));
             searchActive.current = true;
         }
-        else if (type == "random"){
+        else if (type == "random") {
             dispatch(postActions.getFeed());
             searchActive.current = false;
             setProfilName(null);
@@ -50,9 +65,9 @@ const HomePage = () => {
 
     return (
         <div>
-            <Header onSearchSubmit={handleSearchChange}/>
-            <TagBar onTagChange={handleTagChange} searchActive={searchActive.current}/>
-            {profileName == null ? <PostLayout feed={feed}/> : <VisitProfile name={profileName} />}
+            <Header onSearchSubmit={handleSearchChange} searchBarText = {name}/>
+            <TagBar onTagChange={handleTagChange} searchActive={searchActive.current} />
+            {profileName == null ? <PostLayout feed={feed} /> : <VisitProfile name={profileName} />}
         </div>
     );
 };

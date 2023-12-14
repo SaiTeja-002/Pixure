@@ -11,8 +11,8 @@
     flex: 0 0 60%;
     /* Adjust width as needed */
     margin-right: 20px;
-    margin-top: -30vh;
-    margin-bottom: -20vh;
+    /* margin-top: -30vh; */
+    /* margin-bottom: -20vh; */
 }
 
 .right-column {
@@ -21,8 +21,8 @@
     justify-content: center;
     align-items: center;
     flex: 0 0 30%;
-    margin-top: -30vh;
-    margin-bottom: -20vh;
+    /* margin-top: -30vh; */
+    /* margin-bottom: -20vh; */
     /* Adjust width as needed */
 }
 
