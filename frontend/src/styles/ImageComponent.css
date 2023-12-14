@@ -22,43 +22,6 @@
     cursor: pointer;
 }
 
-/* .action-button.edit:hover::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: auto;
-    width: 20px;
-    height: 100%;
-    background-color: rgba(75, 75, 75, 0.8);
-    border-radius: 4px;
-    z-index: 1;
-}
-
-.action-button.download:hover::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: auto;
-    right: auto;
-    width: 20px;
-    height: 100%;
-    background-color: rgba(77, 162, 77, 0.3);
-    border-radius: 4px;
-    z-index: 1;
-}
-
-.action-button.delete:hover::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: auto;
-    width: 20px;
-    height: 100%;
-    background-color: rgba(246, 20, 20, 0.268);
-    border-radius: 4px;
-    z-index: 1;
-} */
-
 .overlay {
     position: absolute;
     top: 0;

@@ -10,10 +10,6 @@ function ImageCard(props) {
                 style={{
                     width: "100%",
                     display: "block",
-                    // borderRadius: "8px",
-                    // padding: "10px",
-                    // margin: "5px 5px 5px 5px",
-                    // boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                 }}
                 alt="img"
             />

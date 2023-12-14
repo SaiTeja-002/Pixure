@@ -75,23 +75,4 @@ describe('VisitProfile component', () => {
 
         expect(getByText('Follow')).toBeInTheDocument();
     });
-
-    // it('renders PostLayout component with mock posts data', async () => {
-    //     const mockProfileWithPosts = {
-    //       ...mockProfile,
-    //       posts: [{ id: 1, content: 'Test post 1' }, { id: 2, content: 'Test post 2' }],
-    //     };
-    //     jest.spyOn(require('react-redux'), 'useSelector').mockImplementation(() => mockProfileWithPosts);
-
-    //     const { getByTestId } = render(
-    //       <Router>
-    //         <VisitProfile name="Test User" />
-    //       </Router>
-    //     );
-
-    //     await waitFor(() => {
-    //       const postLayoutComponent = getByTestId('post-layout');
-    //       expect(postLayoutComponent).toBeInTheDocument();
-    //     });
-    // });
 });
