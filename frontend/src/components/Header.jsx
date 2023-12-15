@@ -12,6 +12,7 @@ const EmptyContainer = () => (
     <div className="empty-container" style={{ width: '100%', height: '20px' }} />
 );
 
+// mock commit
 const Header = ({ onSearchSubmit, searchBarText }) => {
     const location = useLocation();
     const currentPath = location.pathname;
